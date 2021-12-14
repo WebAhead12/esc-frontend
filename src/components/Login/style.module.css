@@ -1,0 +1,45 @@
+.center{
+    display: flex;
+    justify-content: center;
+}
+.loginHolder{
+    margin-top: 200px;
+    width: 600px;
+    height: 350px;
+    border: 3px solid gray;
+    border-radius: 9px;
+}
+.logoImg{
+    width: 250px;
+    height: 250px;
+}
+.usernameInput{
+    padding: 10px;
+    width: 400px;
+    height: 48px;
+    margin-bottom: 20px;
+    background: #EFEFE0;
+    border-radius: 12px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+.passwordInput{
+    padding: 10px;
+    width: 400px;
+    height: 48px;
+    margin-bottom: 20px;
+    background: #EFEFE0;
+    border-radius: 12px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+.loginButton{
+    width: 416.6px;
+    height: 53.47px;
+    margin-bottom: 20px;
+    background: #FAC81D;
+    border-radius: 12px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+.text{
+    color: gray;
+    text-decoration: none;
+}
