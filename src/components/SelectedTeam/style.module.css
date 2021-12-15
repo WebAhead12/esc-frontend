@@ -3,16 +3,20 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 600px;
-    width: 800px;
+    height: 50%;
+    width: 60%;
     margin: 0 auto;
+    padding: 5%;
+    background: #EFEFE0;
+    border-radius: 12px;
+    filter: drop-shadow(5px 3px 3px rgba(0, 0, 0, 0.25));
 }
 .textDiv{
     text-align: start;
 }
 .img{
-    height: 200px;
-    width: 300px;
+    height: 50%;
+    max-width: 50%;
 }
 .requirements{
     list-style-type: none;
@@ -26,10 +30,20 @@
 
 }
 .backButton{
-    width: 100px;
+    margin-top: 10px;
+    width: 40%;
+    background: #B1C9AC;
+    border-radius: 12px;
+    border: 0px;
+    cursor: pointer;
 }
 .sendResumeButton{
-    width: 190px;
+    margin-top: 10px;
+    width: 60%;
+    background-color: #A8F395;
+    border-radius: 12px;
+    border: 0;
+    cursor: pointer;
 }
 .upper{
     display: flex;
@@ -38,5 +52,6 @@
 .buttons{
     display: flex;
     align-self: flex-end;
+    width:50%;
 }
 

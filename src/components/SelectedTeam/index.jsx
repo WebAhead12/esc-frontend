@@ -31,9 +31,8 @@ function SelectedTeam(props) {
                         })}
                     </ul>
                 </div>
-                <div className={style.image}>
-                    <img src={teams.imagelink} alt="logo" className={style.img} />
-                </div>
+
+                <img src={teams.imagelink} alt="logo" className={style.img} />
             </div>
             <div className={style.buttons}>
 
