@@ -1,0 +1,42 @@
+.teamDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 600px;
+    width: 800px;
+    margin: 0 auto;
+}
+.textDiv{
+    text-align: start;
+}
+.img{
+    height: 200px;
+    width: 300px;
+}
+.requirements{
+    list-style-type: none;
+}
+.players{
+    list-style: none;
+}
+.image{
+    display: flex;
+    flex-direction: column;
+
+}
+.backButton{
+    width: 100px;
+}
+.sendResumeButton{
+    width: 190px;
+}
+.upper{
+    display: flex;
+    flex-direction: row;
+}
+.buttons{
+    display: flex;
+    align-self: flex-end;
+}
+
