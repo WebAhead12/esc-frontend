@@ -1,12 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Quicksand&display=swap");
+
 .teamDiv {
+  font-family: "Orbitron", sans-serif;
   display: flex;
+  font-size: 25px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 50%;
   width: 60%;
   margin: 0 auto;
-  padding: 5%;
+  padding: 2%;
   background: #efefe0;
   border-radius: 12px;
   filter: drop-shadow(5px 3px 3px rgba(0, 0, 0, 0.25));
@@ -40,6 +44,8 @@
 .sendResumeButton {
   margin-top: 10px;
   width: 60%;
+  height: 3vh;
+  margin-left: 2%;
   background-color: #a8f395;
   border-radius: 12px;
   border: 0;
@@ -53,4 +59,5 @@
   display: flex;
   align-self: flex-end;
   width: 50%;
+  margin-top: 1%;
 }

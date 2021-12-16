@@ -1,45 +1,52 @@
-.center{
-    display: flex;
-    justify-content: center;
+.center {
+  display: flex;
+  justify-content: center;
 }
-.loginHolder{
-    margin-top: 200px;
-    width: 600px;
-    height: 350px;
-    border: 3px solid gray;
-    border-radius: 9px;
+.loginHolder {
+  margin-top: 200px;
+  width: 35%;
+  height: 350px;
+  border-radius: 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.logoImg{
-    width: 250px;
-    height: 250px;
+.logoImg {
+  width: 250px;
+  height: 250px;
 }
-.usernameInput{
-    padding: 10px;
-    width: 400px;
-    height: 48px;
-    margin-bottom: 20px;
-    background: #EFEFE0;
-    border-radius: 12px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+.usernameInput {
+  padding: 10px;
+  width: 65%;
+  height: 60px;
+  font-size: 30px;
+  background: #efefe0;
+  border: 0;
+  border-radius: 12px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
-.passwordInput{
-    padding: 10px;
-    width: 400px;
-    height: 48px;
-    margin-bottom: 20px;
-    background: #EFEFE0;
-    border-radius: 12px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+.passwordInput {
+  padding: 10px;
+  width: 65%;
+  height: 60px;
+  font-size: 30px;
+  margin-bottom: 10px;
+  background: #efefe0;
+  border-radius: 12px;
+  border: 0;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
-.loginButton{
-    width: 416.6px;
-    height: 53.47px;
-    margin-bottom: 20px;
-    background: #FAC81D;
-    border-radius: 12px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+.loginButton {
+  width: 60%;
+  height: 53.47px;
+  font-size: 36px;
+  border: 0;
+  padding: 3px;
+  background: #fac81d;
+  border-radius: 12px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
-.text{
-    color: gray;
-    text-decoration: none;
+.text {
+  color: gray;
+  text-decoration: none;
 }
