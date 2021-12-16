@@ -34,10 +34,12 @@ h3 {
 
 .teamimg {
   display: flex;
-  width: 35%;
-  max-height: 35vh;
   align-self: flex-end;
   justify-self: flex-end;
+  z-index: inherit;
+  width: 250px;
+  height: 250px;
+  margin-left: 20%;
 }
 main {
   margin: 0 auto;
