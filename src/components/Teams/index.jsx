@@ -2,6 +2,8 @@ import React from "react";
 import style from "./style.module.css";
 
 export default function Teams(props) {
+  //set navbar to shown on this page
+
   let teamsArr = {
     team1: {
       teamname: "Cloud 9",

@@ -1,26 +1,37 @@
 import "./App.css";
-// import { Routes, Route } from "react-router-dom";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Switch } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import SelectedTeam from "./components/SelectedTeam"
-import Login from "./components/Login"
-import Register from "./components/Register"
+import { Switch } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar.jsx";
+import SelectedTeam from "./components/SelectedTeam";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import Teams from "./components/Teams";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import React from "react";
 
 function App() {
+  const [showNavbar, setShowNavbar] = React.useState(true);
+
   return (
-    <div className="App">
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route path="/" exact element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="SelectedTeam" element={<SelectedTeam />} />
-          <Route path="teams" element={<Teams />} />
-        </Switch>
-      </Router></div>
+    <>
+      {showNavbar ? <Navbar /> : null}
+      <Routes>
+        <Route
+          path="/"
+          exact
+          element={<Login setShowNavbar={setShowNavbar} />}
+        />
+        <Route
+          path="register"
+          element={<Register setShowNavbar={setShowNavbar} />}
+        />
+        <Route
+          path="SelectedTeam"
+          element={<SelectedTeam setShowNavbar={setShowNavbar} />}
+        />
+        <Route path="teams" element={<Teams setShowNavbar={setShowNavbar} />} />
+      </Routes>
+    </>
   );
 }
 
