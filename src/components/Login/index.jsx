@@ -28,7 +28,7 @@ function Login(props) {
           <button className={style.loginButton}>Login</button>
           <br />
           <a href="/register" className={style.text}>
-            I dont have an account,sign up?
+            Dont have an account, sign up?
           </a>
         </div>
       </div>
