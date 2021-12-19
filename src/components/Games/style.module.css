@@ -1,0 +1,84 @@
+.gamebox .innergame.r6tab {
+  background-image: url(https://cdn.tabstats.com/tabstats/tab/_r6tab.jpg);
+}
+.gamebox .innergame.valotab {
+  background-image: url(https://cdn.tabstats.com/tabstats/tab/_valotab.jpg);
+}
+.gamebox .innergame.rockettab {
+  background-image: linear-gradient(
+      to right,
+      rgba(0, 78, 117, 0.6),
+      rgba(0, 52, 77, 0.6)
+    ),
+    url(https://trackercdn.com/cdn/tracker.gg/heroes/rocket-league.png),
+    linear-gradient(to right, #004e75, #00344d);
+}
+.gamebox .innergame.loltab {
+  background-image: url(https://trackercdn.com/cdn/tracker.gg/boxart/league-of-legends.jpg);
+}
+.gamebox .innergame.cstab {
+  background-image: url(https://trackercdn.com/cdn/tracker.gg/boxart/csgo.jpg);
+}
+.gamebox .innergame.pubgtab {
+  background-image: url(https://trackercdn.com/cdn/tracker.gg/boxart/pubg.jpg);
+}
+.gamebox .innergame.apextab {
+  background-image: url(https://cdn.tabstats.com/tabstats/tab/_apextab.jpg);
+}
+.gamebox .innergame.brawtab {
+  background-image: url(https://trackercdn.com/cdn/tracker.gg/boxart/brawlhalla.jpg);
+}
+.gamebox .innergame.overtab {
+  background-image: url(https://trackercdn.com/cdn/tracker.gg/boxart/overwatch.jpg);
+}
+.gamebox .innergame.dota2tab {
+  background-image: url(./dota2.jpg);
+}
+.title1 {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.gamebox {
+  display: inline-block;
+  width: 170px;
+  height: 280px;
+  margin-right: 8px;
+  margin-left: 8px;
+  margin-top: 100px;
+  margin-bottom: 8px;
+  border: 3px solid #222222;
+  overflow: hidden;
+  cursor: pointer;
+}
+.gamebox .innergame {
+  width: 102%;
+  height: 102%;
+  margin-top: -1%;
+  margin-left: -1%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #111111;
+  vertical-align: bottom;
+  box-shadow: inset 0px 0px 100px #000000;
+}
+.gamebox .title {
+  border-top: 1px solid #222222;
+  float: left;
+  width: 100%;
+  margin-top: 234px;
+  height: 46px;
+  padding-top: 10px;
+  font-size: 16px;
+  background: rgba(16, 16, 16, 0.95);
+  color: #aaaaaa;
+  font-weight: 700;
+  text-align: center;
+}
+
+a:visited,
+a {
+  color: #aaaaaa;
+  text-decoration: none;
+}
