@@ -14,7 +14,7 @@ export const SidebarData = [
     },
     {
         title: 'Players',
-        path: '/player',
+        path: '/players',
         icon: <GiIcons.GiPlayerBase />,
         cName: 'nav-text'
     },
