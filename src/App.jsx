@@ -1,11 +1,11 @@
 import "./App.css";
-import { Switch } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import SelectedTeam from "./components/SelectedTeam";
 import Login from "./components/Login";
-import Register from "./components/Register";
 import Teams from "./components/Teams";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Players from "./components/Players"
+import SelectedPlayer from "./components/PlayerSelected";
+import { Routes, Route } from "react-router-dom";
 
 import React from "react";
 
@@ -16,20 +16,11 @@ function App() {
     <>
       {showNavbar ? <Navbar /> : null}
       <Routes>
-        <Route
-          path="/"
-          exact
-          element={<Login setShowNavbar={setShowNavbar} />}
-        />
-        <Route
-          path="register"
-          element={<Register setShowNavbar={setShowNavbar} />}
-        />
-        <Route
-          path="SelectedTeam"
-          element={<SelectedTeam setShowNavbar={setShowNavbar} />}
-        />
+        <Route path="/" element={<Login setShowNavbar={setShowNavbar} />} />
+        <Route path="SelectedTeam" element={<SelectedTeam setShowNavbar={setShowNavbar} />} />
         <Route path="teams" element={<Teams setShowNavbar={setShowNavbar} />} />
+        <Route path="players" element={<Players setShowNavbar={setShowNavbar} />} />
+        <Route path="selectedPlayer" element={<SelectedPlayer setShowNavbar={setShowNavbar} />} />
       </Routes>
     </>
   );

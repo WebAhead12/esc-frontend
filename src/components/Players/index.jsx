@@ -3,7 +3,8 @@ import style from "./style.module.css";
 
 export default function Players(props) {
   //set navbar to shown on this page
-
+  const { setShowNavbar } = props;
+  setShowNavbar(true);
   let playersArr = {
     player1: {
       username: "Karyum",
@@ -34,7 +35,7 @@ export default function Players(props) {
                 <h3>{player.username}</h3>
                 <p className={style.description}>{player.description}</p>
               </div>
-              <img className={style.playerimg} src={player.imagelink} />
+              <img className={style.playerimg} src={player.imagelink} alt="player img" />
             </div>
           );
         })}
