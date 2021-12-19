@@ -11,6 +11,7 @@ import React from "react";
 
 function App() {
   const [showNavbar, setShowNavbar] = React.useState(true);
+  const [teamName, setTeamName] = React.useState(null);
 
   return (
     <>
@@ -27,9 +28,20 @@ function App() {
         />
         <Route
           path="SelectedTeam"
-          element={<SelectedTeam setShowNavbar={setShowNavbar} />}
+          element={
+            <SelectedTeam setShowNavbar={setShowNavbar} teamName={teamName} />
+          }
         />
-        <Route path="teams" element={<Teams setShowNavbar={setShowNavbar} />} />
+        <Route
+          path="teams"
+          element={
+            <Teams
+              setShowNavbar={setShowNavbar}
+              teamName={teamName}
+              setTeamName={setTeamName}
+            />
+          }
+        />
       </Routes>
     </>
   );
