@@ -33,6 +33,10 @@ function App() {
           }
         />
         <Route
+          path="players"
+          element={<Players setShowNavbar={setShowNavbar} />}
+        />
+        <Route
           path="teams"
           element={
             <Teams
