@@ -55,7 +55,7 @@ function Register(props) {
         languages: languages,
       };
 
-      fetch("http://localhost:4000/register", {
+      fetch("http://localhost:4000/registerP", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(player),

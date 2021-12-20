@@ -19,12 +19,14 @@ const Login = (props) => {
   const [error, setError] = useState(false);
   const history = useNavigate();
   const [pot, setPot] = useState(true);
+
   const onChange =
     (stateKey) =>
     ({ target }) =>
       setUserData({ ...userData, [stateKey]: target.value });
 
   const onSubmit = () => {
+    console.log(userData);
     setLoading(true);
     if (pot == true) {
       axios
@@ -102,7 +104,12 @@ const Login = (props) => {
               type="text"
               className={style.usernameInput}
               placeholder="Username"
-              onChange={(e) => setUserData([e.target.value, userData[1]])}
+              onChange={(e) =>
+                setUserData({
+                  username: e.target.value,
+                  password: userData.password,
+                })
+              }
               required
             ></input>
           ) : (
@@ -110,7 +117,12 @@ const Login = (props) => {
               type="text"
               className={style.usernameInput}
               placeholder="Team-name"
-              onChange={(e) => setTeamData([e.target.value, teamData[1]])}
+              onChange={(e) =>
+                setTeamData({
+                  teamname: e.target.value,
+                  password: teamData.password,
+                })
+              }
               required
             ></input>
           )}
@@ -121,7 +133,12 @@ const Login = (props) => {
               type="password"
               className={style.passwordInput}
               placeholder="Password"
-              onChange={(e) => setUserData([userData[0], e.target.value])}
+              onChange={(e) =>
+                setUserData({
+                  username: userData.username,
+                  password: e.target.value,
+                })
+              }
               required
             ></input>
           ) : (
@@ -129,7 +146,12 @@ const Login = (props) => {
               type="password"
               className={style.passwordInput}
               placeholder="Password"
-              onChange={(e) => setTeamData([teamData[0], e.target.value])}
+              onChange={(e) =>
+                setTeamData({
+                  username: teamData.username,
+                  password: e.target.value,
+                })
+              }
               required
             ></input>
           )}
