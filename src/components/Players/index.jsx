@@ -2,6 +2,9 @@ import React from "react";
 import style from "./style.module.css";
 
 export default function Players(props) {
+  const { setShowNavbar } = props;
+  setShowNavbar(true);
+
   let playersArr = {
     player1: {
       username: "Karyum",

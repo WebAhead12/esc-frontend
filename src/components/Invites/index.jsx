@@ -5,6 +5,8 @@ import useFetch from "../../fetch";
 
 export default function Invites(props) {
   const [invites, setInvites] = useState(null);
+  const { setShowNavbar } = props;
+  setShowNavbar(true);
 
   fetch(`http://localhost:4000/invites`, {
     headers: { authorization: `Bearer ${token}` },

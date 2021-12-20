@@ -4,6 +4,7 @@ function SelectedTeam(props) {
   //set navbar to shown on this page
   const { setShowNavbar } = props;
   setShowNavbar(true);
+
   const {
     error,
     isPending,

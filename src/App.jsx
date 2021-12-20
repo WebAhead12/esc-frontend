@@ -1,19 +1,18 @@
 import "./App.css";
-import { Switch } from "react-router-dom";
 import Players from "./components/Players";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import SelectedTeam from "./components/SelectedTeam";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Teams from "./components/Teams";
-import Players from "./components/Players";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import React from "react";
 
 function App() {
   const [showNavbar, setShowNavbar] = React.useState(true);
   const [teamName, setTeamName] = React.useState(null);
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   return (
     <>
@@ -22,21 +21,44 @@ function App() {
         <Route
           path="/"
           exact
-          element={<Login setShowNavbar={setShowNavbar} />}
+          element={
+            <Login
+              setShowNavbar={setShowNavbar}
+              setLoggedIn={setLoggedIn}
+              loggedIn={loggedIn}
+            />
+          }
         />
         <Route
           path="register"
-          element={<Register setShowNavbar={setShowNavbar} />}
+          element={
+            <Register
+              setShowNavbar={setShowNavbar}
+              setLoggedIn={setLoggedIn}
+              loggedIn={loggedIn}
+            />
+          }
         />
         <Route
           path="SelectedTeam"
           element={
-            <SelectedTeam setShowNavbar={setShowNavbar} teamName={teamName} />
+            <SelectedTeam
+              setShowNavbar={setShowNavbar}
+              teamName={teamName}
+              setLoggedIn={setLoggedIn}
+              loggedIn={loggedIn}
+            />
           }
         />
         <Route
           path="players"
-          element={<Players setShowNavbar={setShowNavbar} />}
+          element={
+            <Players
+              setShowNavbar={setShowNavbar}
+              setLoggedIn={setLoggedIn}
+              loggedIn={loggedIn}
+            />
+          }
         />
         <Route
           path="teams"
@@ -45,6 +67,8 @@ function App() {
               setShowNavbar={setShowNavbar}
               teamName={teamName}
               setTeamName={setTeamName}
+              setLoggedIn={setLoggedIn}
+              loggedIn={loggedIn}
             />
           }
         />
