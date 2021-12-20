@@ -1,7 +1,8 @@
 import style from "./style.module.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { languagesOptions } from "./languages.js";
+import { languagesOptions } from "../../utils/languages.js";
+import { gamesOptions } from "../../utils/games.js";
 import React, { useEffect, useState } from "react";
 
 function validateEmail(emailAdress) {
@@ -24,7 +25,9 @@ function Register(props) {
     { value: "female", label: "Female" },
     { value: "other", label: "Other" },
   ];
-
+  const [teamname, setTeamname] = useState("");
+  const [game, setGame] = useState("");
+  const [description, setDescription] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -39,7 +42,44 @@ function Register(props) {
 
   const [pot, setPot] = useState(true);
 
-  function handleSubmit(event) {
+  function handleTeamSubmit(event) {
+    event.preventDefault();
+    if (password !== confirm) console.log("Passwords do not match!");
+    else if (!teamname) console.log("Username cannot be empty!");
+    else if (!password) console.log("Password cannot be empty!");
+    else if (!email) console.log("Email cannot be empty!");
+    else if (!validateEmail(email)) console.log("Invalid email!");
+    else if (!game) console.log("Please enter your gender!");
+    else if (!description) console.log("Please enter a description");
+    else {
+      const data = {
+        teamname: username,
+        name: teamname,
+        password: password,
+        email: email,
+        game: game,
+        imagelink: imagelink,
+        description: description,
+      };
+      fetch("http://localhost:4000/registerT", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error(response.status);
+          return response.json();
+        })
+        .then((data) => {
+          if (data.status == "success") {
+            goTo("/");
+          }
+        })
+        .catch(console.error);
+    }
+  }
+
+  function handlePlayerSubmit(event) {
     event.preventDefault();
     if (password !== confirm) console.log("Passwords do not match!");
     else if (!username) console.log("Username cannot be empty!");
@@ -70,7 +110,11 @@ function Register(props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-      }).catch(console.error);
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch(console.error);
     }
   }
 
@@ -81,7 +125,11 @@ function Register(props) {
       .then((data) => setLocation(data.country));
   }, []);
 
-  return (
+  useEffect(() => {
+    console.log(game);
+  }, [game]);
+
+  return pot ? (
     <div>
       <h1 className={style.title}>Register</h1>
       <div className={style.register}>
@@ -102,7 +150,7 @@ function Register(props) {
         >
           Team
         </button>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handlePlayerSubmit}>
           <input
             type="text"
             id="username"
@@ -175,6 +223,90 @@ function Register(props) {
             placeholder="Profile picture"
             onChange={(e) => setImgLink(e.target.value)}
           />
+          <button type="submit">Create an account</button>
+        </form>
+        <a href="/">Already have an account?</a>
+      </div>
+    </div>
+  ) : (
+    <div>
+      <h1 className={style.title}>Register</h1>
+      <div className={style.register}>
+        <img></img>
+        <button
+          className={style.playerButton}
+          onClick={(e) => {
+            setPot(true);
+          }}
+        >
+          Player
+        </button>
+        <button
+          className={style.teamButton}
+          onClick={(e) => {
+            setPot(false);
+          }}
+        >
+          Team
+        </button>
+        <form onSubmit={handleTeamSubmit}>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="text"
+            id="teamname"
+            name="teamname"
+            placeholder="Team name"
+            onChange={(e) => setTeamname(e.target.value)}
+          />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email address"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirm password"
+            onChange={(e) => setConfirm(e.target.value)}
+          />
+          <Select
+            className={style.gender}
+            isSearchable={true}
+            name="game"
+            options={gamesOptions}
+            onChange={(e) => setGame(e.value)}
+          />
+          <input
+            type="text"
+            id="description"
+            name="description"
+            placeholder="Description"
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <input
+            type="text"
+            id="imglink"
+            name="imglink"
+            placeholder="Team picture"
+            onChange={(e) => setImgLink(e.target.value)}
+          />
+
           <button type="submit">Create an account</button>
         </form>
         <a href="/">Already have an account?</a>
