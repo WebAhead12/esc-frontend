@@ -2,8 +2,6 @@ import React from "react";
 import style from "./style.module.css";
 
 export default function Players(props) {
-  //set navbar to shown on this page
-
   let playersArr = {
     player1: {
       username: "Karyum",
@@ -14,7 +12,7 @@ export default function Players(props) {
       game: "League Of Legends",
     },
     player2: {
-      username: "player Solo Mid",
+      username: "George",
       imagelink: "https://avatars.githubusercontent.com/u/24195641?v=4",
       description:
         "We are the better Org by far in North america and even in the whole world",

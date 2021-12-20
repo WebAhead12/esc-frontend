@@ -5,6 +5,7 @@ import SelectedTeam from "./components/SelectedTeam";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Teams from "./components/Teams";
+import Players from "./components/Players";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import React from "react";
@@ -30,6 +31,10 @@ function App() {
           element={<SelectedTeam setShowNavbar={setShowNavbar} />}
         />
         <Route path="teams" element={<Teams setShowNavbar={setShowNavbar} />} />
+        <Route
+          path="players"
+          element={<Players setShowNavbar={setShowNavbar} />}
+        />
       </Routes>
     </>
   );
