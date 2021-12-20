@@ -14,9 +14,6 @@ export default function Teams(props) {
   const { setShowNavbar } = props;
   setShowNavbar(true);
 
-  // const { loggedIn, setLoggedIn } = props;
-  if (!props.loggedIn) goTo("/");
-
   return (
     <main>
       <div className={style.title}>Teams</div>

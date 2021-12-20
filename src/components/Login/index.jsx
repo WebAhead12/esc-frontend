@@ -6,8 +6,12 @@ import utils from "../../utils/loginAuth.js";
 
 const Login = (props) => {
   //set navbar to hidden on this page
-  const history = useNavigate();
-  if (props.loggedIn) history("/teams");
+  const goTo = useNavigate();
+  useEffect(() => {
+    if (utils.checkLogin()) {
+      goTo("/teams");
+    }
+  });
   const { setShowNavbar } = props;
   setShowNavbar(false);
   const [userData, setUserData] = useState({
@@ -32,7 +36,7 @@ const Login = (props) => {
         .then((res) => {
           setLoading(false);
           localStorage.setItem("access_token", res.data.access_token);
-          history("/teams");
+          goTo("/teams");
         })
         .catch((err) => {
           setError(err.message);
@@ -44,7 +48,7 @@ const Login = (props) => {
         .then((res) => {
           setLoading(false);
           localStorage.setItem("access_token", res.data.access_token);
-          history("/players");
+          goTo("/players");
         })
         .catch((err) => {
           setError(err.message);

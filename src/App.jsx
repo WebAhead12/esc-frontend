@@ -5,14 +5,22 @@ import SelectedTeam from "./components/SelectedTeam";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Teams from "./components/Teams";
-import { Routes, Route } from "react-router-dom";
+import Games from "./components/Games";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import React from "react";
+
+const checkLogin = () => {
+  return !!localStorage.getItem("access_token");
+};
+
+function RequireAuth({ children }) {
+  return !checkLogin() ? <Navigate to="/" /> : children;
+}
 
 function App() {
   const [showNavbar, setShowNavbar] = React.useState(true);
   const [teamName, setTeamName] = React.useState(null);
-  const [loggedIn, setLoggedIn] = React.useState(false);
 
   return (
     <>
@@ -21,55 +29,46 @@ function App() {
         <Route
           path="/"
           exact
-          element={
-            <Login
-              setShowNavbar={setShowNavbar}
-              setLoggedIn={setLoggedIn}
-              loggedIn={loggedIn}
-            />
-          }
+          element={<Login setShowNavbar={setShowNavbar} />}
         />
         <Route
           path="register"
-          element={
-            <Register
-              setShowNavbar={setShowNavbar}
-              setLoggedIn={setLoggedIn}
-              loggedIn={loggedIn}
-            />
-          }
+          element={<Register setShowNavbar={setShowNavbar} />}
         />
         <Route
           path="SelectedTeam"
           element={
-            <SelectedTeam
-              setShowNavbar={setShowNavbar}
-              teamName={teamName}
-              setLoggedIn={setLoggedIn}
-              loggedIn={loggedIn}
-            />
+            <RequireAuth>
+              <SelectedTeam setShowNavbar={setShowNavbar} teamName={teamName} />
+            </RequireAuth>
           }
         />
         <Route
           path="players"
           element={
-            <Players
-              setShowNavbar={setShowNavbar}
-              setLoggedIn={setLoggedIn}
-              loggedIn={loggedIn}
-            />
+            <RequireAuth>
+              <Players setShowNavbar={setShowNavbar} />
+            </RequireAuth>
           }
         />
         <Route
           path="teams"
           element={
-            <Teams
-              setShowNavbar={setShowNavbar}
-              teamName={teamName}
-              setTeamName={setTeamName}
-              setLoggedIn={setLoggedIn}
-              loggedIn={loggedIn}
-            />
+            <RequireAuth>
+              <Teams
+                setShowNavbar={setShowNavbar}
+                teamName={teamName}
+                setTeamName={setTeamName}
+              />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="games"
+          element={
+            <RequireAuth>
+              <Games setShowNavbar={setShowNavbar}></Games>
+            </RequireAuth>
           }
         />
       </Routes>
