@@ -29,21 +29,28 @@ function Register(props) {
   const [lastname, setlName] = useState("");
   const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
   const [gender, setGender] = useState("");
   const [imagelink, setImgLink] = useState("");
   const [languages, setLanguages] = useState([]);
 
-  const [pot,setPot] = useState(true)
+  const [pot, setPot] = useState(true);
 
   function handleSubmit(event) {
     event.preventDefault();
     if (password !== confirm) console.log("Passwords do not match!");
-    else if (!username) console.log("Username cannot be empty");
-    else if (!password) console.log("Password cannot be empty");
-    else if (!email) console.log("Email cannot be empty");
+    else if (!username) console.log("Username cannot be empty!");
+    else if (!password) console.log("Password cannot be empty!");
+    else if (!email) console.log("Email cannot be empty!");
     else if (!validateEmail(email)) console.log("Invalid email!");
+    else if (!gender) console.log("Please enter your gender!");
+    else if (languages.length < 1)
+      console.log("Please enter atleast 1 language!");
+    else if (!firstname) console.log("First name cannot be empty!");
+    else if (!lastname) console.log("Last name cannot be empty");
+    else if (!date) console.log("Please enter date of birth");
     else {
-      const player = {
+      const data = {
         username: username,
         password: password,
         firstname: firstname,
@@ -51,29 +58,47 @@ function Register(props) {
         email: email,
         date: date,
         gender: gender,
+        location: location,
         imagelink,
         languages: languages,
       };
-
+      console.log(data);
       fetch("http://localhost:4000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(player),
-      });
+        body: JSON.stringify(data),
+      }).catch(console.error);
     }
   }
 
-  React.useEffect(() => {
-    console.log(date);
-  }, [date]);
+  useEffect(() => {
+    let apiKey = "d070a65e781d4eb38537345be1a7ff3b";
+    fetch("https://ipgeolocation.abstractapi.com/v1/?api_key=" + apiKey)
+      .then((response) => response.json())
+      .then((data) => setLocation(data.country));
+  }, []);
 
   return (
     <div>
       <h1 className={style.title}>Register</h1>
       <div className={style.register}>
         <img></img>
-        <button className={style.playerButton} onClick={(e)=>{setPot(true)}}>Player</button>
-        <button className={style.teamButton} onClick={(e)=>{setPot(false)}}>Team</button>
+        <button
+          className={style.playerButton}
+          onClick={(e) => {
+            setPot(true);
+          }}
+        >
+          Player
+        </button>
+        <button
+          className={style.teamButton}
+          onClick={(e) => {
+            setPot(false);
+          }}
+        >
+          Team
+        </button>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -119,7 +144,6 @@ function Register(props) {
           />
           <Select
             className={style.gender}
-            defaultValue="Gender"
             isSearchable={true}
             name="gender"
             options={genderOptions}
