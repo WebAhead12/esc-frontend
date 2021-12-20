@@ -16,6 +16,9 @@ function validateEmail(emailAdress) {
 function Register(props) {
   const goTo = useNavigate();
 
+  const { setShowNavbar } = props;
+  setShowNavbar(false);
+
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
