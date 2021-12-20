@@ -62,8 +62,8 @@ function Register(props) {
         imagelink,
         languages: languages,
       };
-      console.log(data);
-      fetch("http://localhost:4000/register", {
+
+      fetch("http://localhost:4000/registerP", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

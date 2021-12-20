@@ -1,5 +1,6 @@
 import "./App.css";
 import { Switch } from "react-router-dom";
+import Players from "./components/Players";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import SelectedTeam from "./components/SelectedTeam";
 import Login from "./components/Login";
