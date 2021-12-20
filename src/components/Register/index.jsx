@@ -33,6 +33,8 @@ function Register(props) {
   const [imagelink, setImgLink] = useState("");
   const [languages, setLanguages] = useState([]);
 
+  const [pot,setPot] = useState(true)
+
   function handleSubmit(event) {
     event.preventDefault();
     if (password !== confirm) console.log("Passwords do not match!");
@@ -70,8 +72,8 @@ function Register(props) {
       <h1 className={style.title}>Register</h1>
       <div className={style.register}>
         <img></img>
-        <button className={style.playerButton}>Player</button>
-        <button className={style.teamButton}>Team</button>
+        <button className={style.playerButton} onClick={(e)=>{setPot(true)}}>Player</button>
+        <button className={style.teamButton} onClick={(e)=>{setPot(false)}}>Team</button>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
