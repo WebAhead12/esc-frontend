@@ -5,7 +5,7 @@ export const gamesOptions = [
   { value: "dota2", label: "Dota 2" },
   { value: "lol", label: "League of Legends" },
   { value: "ow", label: "Overwatch" },
-  { value: "pubg", label: "Players Unkown Battle Grounds" },
+  { value: "pubg", label: "PUBG" },
   { value: "rl", label: "Rocket league" },
   { value: "r6", label: "Rainbow six siege" },
   { value: "valorant", label: "Valorant" },
