@@ -1,5 +1,4 @@
 import style from "./style.module.css";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import useFetch from "../../fetch";
 

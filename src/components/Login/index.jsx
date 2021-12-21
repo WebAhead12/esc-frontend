@@ -26,7 +26,6 @@ const Login = (props) => {
       setUserData({ ...userData, [stateKey]: target.value });
 
   const onSubmit = () => {
-    console.log(userData);
     setLoading(true);
     if (pot == true) {
       axios
@@ -37,7 +36,7 @@ const Login = (props) => {
           if (!res.data.success) {
             setError(res.data.message);
           } else {
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("access_token", res.data.access_token);
             history("/");
           }
         })
@@ -54,7 +53,7 @@ const Login = (props) => {
           if (!res.data.success) {
             setError(res.data.message);
           } else {
-            localStorage.setItem("token", res.data.token);
+            window.localStorage.setItem("access_token", res.data.access_token);
             history("/");
           }
         })

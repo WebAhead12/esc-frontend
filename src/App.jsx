@@ -6,6 +6,7 @@ import SelectedTeam from "./components/SelectedTeam";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Teams from "./components/Teams";
+import Invites from "./components/Invites";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import React from "react";
@@ -13,6 +14,7 @@ import React from "react";
 function App() {
   const [showNavbar, setShowNavbar] = React.useState(true);
   const [teamName, setTeamName] = React.useState(null);
+  const [username, setUsername] = React.useState(null);
 
   return (
     <>
@@ -35,8 +37,15 @@ function App() {
         />
         <Route
           path="players"
-          element={<Players setShowNavbar={setShowNavbar} />}
+          element={
+            <Players
+              setShowNavbar={setShowNavbar}
+              username={username}
+              setUsername={setUsername}
+            />
+          }
         />
+        <Route path="invites" element={<Invites />} />
         <Route
           path="teams"
           element={
