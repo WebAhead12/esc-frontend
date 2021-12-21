@@ -4,19 +4,53 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 function SelectedTeam(props) {
-  const token = window.localStorage.getItem("access_token");
-  const { setShowNavbar } = props;
-  const [answer, setAnswer] = useState("Send Resume");
   const goTo = useNavigate();
 
+  const token = window.localStorage.getItem("access_token");
+  const { setShowNavbar } = props;
+  const [answer, setAnswer] = useState(false);
+  const [tosay, Settosay] = useState("Resume Sent");
   setShowNavbar(true);
   const {
     error,
     isPending,
     data: data,
   } = useFetch(`http://localhost:4000/Selectedteams/${props.teamName}`);
+
+  useEffect(() => {
+    if (!data) return;
+
+    const team = data ? data[0] : null;
+
+    fetch(`http://localhost:4000/checkRequests`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ teamid: team.id }),
+    })
+      .then((res) => {
+        console.log(res, "res");
+        if (!res.ok) {
+          const error = new Error("HTTP error");
+          error.status = res.status;
+          throw error;
+        } else {
+          return res.json();
+        }
+      })
+      .then((check) => {
+        console.log("check", check);
+        if (!check.length) {
+          setAnswer(true);
+          Settosay("Send Resume");
+        }
+      });
+  }, [data]);
+
   function addResume(teamid) {
-    if (answer == "Send Resume") {
+    if (answer) {
       fetch(`http://localhost:4000/addRequests`, {
         method: "POST",
         headers: {
@@ -35,10 +69,9 @@ function SelectedTeam(props) {
         }
       });
     }
-    setAnswer("Resume Sent");
   }
   const team = data ? data[0] : null;
-  console.log("team", team);
+  console.log("stats", team);
   return (
     <div>
       {error && <div>{error}</div>}
@@ -66,10 +99,13 @@ function SelectedTeam(props) {
               Back
             </button>
             <button
-              onClick={() => addResume(team.id)}
+              onClick={() => {
+                addResume(team.id);
+                goTo("/teams");
+              }}
               className={style.sendResumeButton}
             >
-              {answer}
+              {tosay}
             </button>
           </div>
         </div>
