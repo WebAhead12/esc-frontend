@@ -53,7 +53,7 @@ function Register(props) {
     else if (!description) console.log("Please enter a description");
     else {
       const data = {
-        teamname: username,
+        username: username,
         name: teamname,
         password: password,
         email: email,
