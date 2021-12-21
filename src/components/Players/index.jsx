@@ -24,7 +24,9 @@ export default function Players(props) {
               key={player.id}
               onClick={() => {
                 props.setUsername(player.username);
-                goTo("/PlayerSelected");
+                console.log(props.username);
+
+                goTo("/SelectedPlayer");
               }}
             >
               <div className="playerPreview">

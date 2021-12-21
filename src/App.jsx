@@ -4,12 +4,14 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import SelectedTeam from "./components/SelectedTeam";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import SentResumes from "./components/SentResumes";
 import Teams from "./components/Teams";
 import Invites from "./components/Invites";
 import Games from "./components/Games";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import React from "react";
+import SelectedPlayer from "./components/PlayerSelected";
 
 const checkLogin = () => {
   return !!localStorage.getItem("access_token");
@@ -46,6 +48,17 @@ function App() {
           }
         />
         <Route
+          path="SelectedPlayer"
+          element={
+            <RequireAuth>
+              <SelectedPlayer
+                setShowNavbar={setShowNavbar}
+                username={username}
+              />
+            </RequireAuth>
+          }
+        />
+        <Route
           path="players"
           element={
             <RequireAuth>
@@ -66,7 +79,14 @@ function App() {
             </RequireAuth>
           }
         />
-
+        <Route
+          path="requests"
+          element={
+            <RequireAuth>
+              <SentResumes setShowNavbar={setShowNavbar} />
+            </RequireAuth>
+          }
+        />
         <Route
           path="teams"
           element={

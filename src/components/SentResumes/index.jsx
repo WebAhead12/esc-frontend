@@ -46,7 +46,7 @@ export default function SentResumes(props) {
         {resumes &&
           resumes.map((resume) => (
             <div className={style.resume}>
-              <h className="title">{resume.teamname}</h>
+              <h className="title">{resume.username}</h>
               <div className={style.status}>Status:{resume.status}</div>
               {resume.status != "Pending" ? null : (
                 <div className="answer">
@@ -66,7 +66,7 @@ export default function SentResumes(props) {
                     onClick={() => {
                       setStatus("accepted");
                       setAnswer(false);
-                      updateresume(resume.playerid, "accepted");
+                      updateResume(resume.playerid, "accepted");
                       window.location.reload();
                     }}
                   >

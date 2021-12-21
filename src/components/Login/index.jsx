@@ -9,7 +9,11 @@ const Login = (props) => {
   const goTo = useNavigate();
   useEffect(() => {
     if (utils.checkLogin()) {
-      goTo("/teams");
+      if (pot) {
+        goTo("/teams");
+      } else {
+        goTo("/players");
+      }
     }
   });
   const { setShowNavbar } = props;
@@ -28,7 +32,6 @@ const Login = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(userData);
     setLoading(true);
     if (pot == true) {
       axios
@@ -48,6 +51,7 @@ const Login = (props) => {
           setLoading(false);
         });
     } else {
+      console.log(teamData);
       axios
         .post("http://localhost:4000/loginT", teamData)
         .then((res) => {
@@ -66,6 +70,10 @@ const Login = (props) => {
         });
     }
   };
+
+  useEffect(() => {
+    console.log(teamData);
+  }, [teamData]);
 
   if (loading) {
     return (
@@ -116,12 +124,13 @@ const Login = (props) => {
                 type="text"
                 className={style.usernameInput}
                 placeholder="Team-name"
-                onChange={(e) =>
+                onChange={(e) => {
+                  console.log(e.target.value);
                   setTeamData({
                     teamname: e.target.value,
                     password: teamData.password,
-                  })
-                }
+                  });
+                }}
                 required
               ></input>
             )}
@@ -145,7 +154,7 @@ const Login = (props) => {
                 placeholder="Password"
                 onChange={(e) =>
                   setTeamData({
-                    username: teamData.username,
+                    teamname: teamData.teamname,
                     password: e.target.value,
                   })
                 }

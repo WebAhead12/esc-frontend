@@ -25,6 +25,7 @@ export default function Teams(props) {
               className={style.team}
               key={team.id}
               onClick={() => {
+                console.log(team);
                 props.setTeamName(team.teamname);
                 goTo("/Selectedteam");
               }}
