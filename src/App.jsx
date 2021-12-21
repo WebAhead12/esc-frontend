@@ -7,6 +7,7 @@ import Register from "./components/Register";
 import Teams from "./components/Teams";
 import Invites from "./components/Invites";
 import Games from "./components/Games";
+import HorizontalLinearStepper from "./components/HorizontalLinearStepper.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import React from "react";
@@ -76,6 +77,14 @@ function App() {
             <RequireAuth>
               <Games setShowNavbar={setShowNavbar}></Games>
             </RequireAuth>
+          }
+        />
+        <Route
+          path="test"
+          element={
+            <HorizontalLinearStepper
+              setShowNavbar={setShowNavbar}
+            ></HorizontalLinearStepper>
           }
         />
       </Routes>
