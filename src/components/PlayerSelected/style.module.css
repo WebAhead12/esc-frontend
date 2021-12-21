@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Quicksand&display=swap");
 
-.teamDiv {
+.playerDiv {
   font-family: "Orbitron", sans-serif;
   display: flex;
   font-size: 25px;
@@ -41,7 +41,7 @@
   border: 0px;
   cursor: pointer;
 }
-.sendResumeButton {
+.sendRequestButton {
   margin-top: 10px;
   width: 60%;
   height: 3vh;

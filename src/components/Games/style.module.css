@@ -32,7 +32,7 @@
   background-image: url(https://trackercdn.com/cdn/tracker.gg/boxart/overwatch.jpg);
 }
 .gamebox .innergame.dota2tab {
-  /* background-image: url(./dota2.jpg); */
+  background-image: url();
 }
 .title1 {
   display: flex;
