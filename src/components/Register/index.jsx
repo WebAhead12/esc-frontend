@@ -53,7 +53,7 @@ function Register(props) {
     else if (!description) console.log("Please enter a description");
     else {
       const data = {
-        username: username,
+        teamname: username,
         name: teamname,
         password: password,
         email: email,
@@ -112,7 +112,13 @@ function Register(props) {
         body: JSON.stringify(data),
       })
         .then((response) => {
-          console.log(response);
+          if (!response.ok) throw new Error(response.status);
+          return response.json();
+        })
+        .then((data) => {
+          if (data.status == "success") {
+            goTo("/");
+          }
         })
         .catch(console.error);
     }

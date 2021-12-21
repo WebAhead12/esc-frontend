@@ -57,7 +57,16 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="invites" element={<Invites />} />
+
+        <Route
+          path="invites"
+          element={
+            <RequireAuth>
+              <Invites setShowNavbar={setShowNavbar} />
+            </RequireAuth>
+          }
+        />
+
         <Route
           path="teams"
           element={

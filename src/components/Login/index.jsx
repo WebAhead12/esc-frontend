@@ -40,7 +40,7 @@ const Login = (props) => {
             setError(res.data.message);
           } else {
             localStorage.setItem("access_token", res.data.access_token);
-            history("/");
+            goTo("/");
           }
         })
         .catch((err) => {
@@ -57,7 +57,7 @@ const Login = (props) => {
             setError(res.data.message);
           } else {
             window.localStorage.setItem("access_token", res.data.access_token);
-            history("/");
+            goTo("/");
           }
         })
         .catch((err) => {
