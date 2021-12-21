@@ -10,6 +10,8 @@ export default function Invites(props) {
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
   const token = window.localStorage.getItem("access_token");
+  const { setShowNavbar } = props;
+  setShowNavbar(true);
 
   useEffect(() => {
     fetch(`http://localhost:4000/invites`, {

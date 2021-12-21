@@ -1,6 +1,8 @@
 import style from "./style.module.css";
 import react from "react";
 function Games(props) {
+  const { setShowNavbar } = props;
+  setShowNavbar(true);
   return (
     <div>
       <div class={style.title1}>

@@ -2,9 +2,16 @@ import style from "./style.module.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import utils from "../../utils/loginAuth.js";
 
 const Login = (props) => {
   //set navbar to hidden on this page
+  const goTo = useNavigate();
+  useEffect(() => {
+    if (utils.checkLogin()) {
+      goTo("/teams");
+    }
+  });
   const { setShowNavbar } = props;
   setShowNavbar(false);
   const [userData, setUserData] = useState({
@@ -17,15 +24,11 @@ const Login = (props) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const history = useNavigate();
   const [pot, setPot] = useState(true);
 
-  const onChange =
-    (stateKey) =>
-    ({ target }) =>
-      setUserData({ ...userData, [stateKey]: target.value });
-
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(userData);
     setLoading(true);
     if (pot == true) {
       axios
@@ -64,13 +67,9 @@ const Login = (props) => {
     }
   };
 
-  useEffect(() => {
-    console.log(pot);
-  }, [pot]);
-
   if (loading) {
     return (
-      <div class="container">
+      <div className="container">
         <h1>Loading...</h1>
       </div>
     );
@@ -98,71 +97,67 @@ const Login = (props) => {
             {" "}
             Team{" "}
           </button>
-          {pot ? (
-            <input
-              type="text"
-              className={style.usernameInput}
-              placeholder="Username"
-              onChange={(e) =>
-                setUserData({
-                  username: e.target.value,
-                  password: userData.password,
-                })
-              }
-              required
-            ></input>
-          ) : (
-            <input
-              type="text"
-              className={style.usernameInput}
-              placeholder="Team-name"
-              onChange={(e) =>
-                setTeamData({
-                  teamname: e.target.value,
-                  password: teamData.password,
-                })
-              }
-              required
-            ></input>
-          )}
-
+          <form onSubmit={onSubmit}>
+            {pot ? (
+              <input
+                type="text"
+                className={style.usernameInput}
+                placeholder="Username"
+                onChange={(e) =>
+                  setUserData({
+                    username: e.target.value,
+                    password: userData.password,
+                  })
+                }
+                required
+              ></input>
+            ) : (
+              <input
+                type="text"
+                className={style.usernameInput}
+                placeholder="Team-name"
+                onChange={(e) =>
+                  setTeamData({
+                    teamname: e.target.value,
+                    password: teamData.password,
+                  })
+                }
+                required
+              ></input>
+            )}
+            {pot ? (
+              <input
+                type="password"
+                className={style.passwordInput}
+                placeholder="Password"
+                onChange={(e) =>
+                  setUserData({
+                    username: userData.username,
+                    password: e.target.value,
+                  })
+                }
+                required
+              ></input>
+            ) : (
+              <input
+                type="password"
+                className={style.passwordInput}
+                placeholder="Password"
+                onChange={(e) =>
+                  setTeamData({
+                    username: teamData.username,
+                    password: e.target.value,
+                  })
+                }
+                required
+              ></input>
+            )}
+            <button className={style.loginButton} type="submit">
+              {" "}
+              Log-in
+            </button>
+          </form>
           <br />
-          {pot ? (
-            <input
-              type="password"
-              className={style.passwordInput}
-              placeholder="Password"
-              onChange={(e) =>
-                setUserData({
-                  username: userData.username,
-                  password: e.target.value,
-                })
-              }
-              required
-            ></input>
-          ) : (
-            <input
-              type="password"
-              className={style.passwordInput}
-              placeholder="Password"
-              onChange={(e) =>
-                setTeamData({
-                  username: teamData.username,
-                  password: e.target.value,
-                })
-              }
-              required
-            ></input>
-          )}
-
-          <br />
-          <button
-            className={style.loginButton}
-            type="log-in"
-            onClick={onSubmit}
-          >
-            Login
-          </button>
           {error && <span class="error">{error}</span>}
           <br />
           <a href="/register" className={style.text}>

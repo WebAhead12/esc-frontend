@@ -3,13 +3,15 @@ import { useNavigate } from "react-router";
 import useFetch from "../../fetch";
 
 export default function Teams(props) {
+  const goTo = useNavigate();
   const {
     error,
     isPending,
     data: teams,
   } = useFetch("http://localhost:4000/teams");
 
-  const goTo = useNavigate();
+  const { setShowNavbar } = props;
+  setShowNavbar(true);
 
   return (
     <main>

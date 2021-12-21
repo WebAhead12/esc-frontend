@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import "./Navbar.css";
 import { IconContext } from "react-icons";
-
+import { useNavigate } from "react-router-dom";
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
+  const goTo = useNavigate();
 
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -36,6 +37,18 @@ function Navbar() {
                 </li>
               );
             })}
+            <li
+              className="nav-text"
+              onClick={(e) => {
+                localStorage.removeItem("access_token");
+                goTo("/");
+              }}
+            >
+              <Link to="#">
+                <AiIcons.AiOutlineLogout />
+                <span className="test">Logout</span>
+              </Link>
+            </li>
           </ul>
         </nav>
       </IconContext.Provider>
