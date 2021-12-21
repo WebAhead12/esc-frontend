@@ -51,20 +51,40 @@ export default function HorizontalLinearStepper(props) {
   const [location, setLocation] = useState("");
   const [gender, setGender] = useState({ value: "male", label: "Male" });
   const [imagelink, setImgLink] = useState("");
-  const [languages, setLanguages] = useState({ value: "en", label: "English" });
+  const [languages, setLanguages] = useState([
+    { value: "en", label: "English" },
+  ]);
   const [selectedGame, setSelectedGame] = useState({ value: "", label: "" });
   const [stats, setStats] = useState({
-    rl: {},
-    lol: {},
-    csgo: {},
-    dota2: {},
-    ow: {},
-    brawlhalla: {},
-    apex: {},
-    pubg: {},
-    valorant: {},
-    r6: {},
+    rl: null,
+    lol: null,
+    csgo: null,
+    dota2: null,
+    ow: null,
+    brawlhalla: null,
+    apex: null,
+    pubg: null,
+    valorant: null,
+    r6: null,
   });
+
+  const games = {
+    rl: "Rocket league",
+    lol: "League of legends",
+    csgo: "Coutner strike",
+    apex: "Apex Legends",
+    brawlhalla: "Brawlhalla",
+    r6: "Rainbow six siege",
+    pubg: "PUBG",
+    ow: "Overwatch",
+    dota2: "Dota 2",
+    valorant: "Valorant",
+  };
+  const [kda, setKda] = useState("");
+  const [rank, setRank] = useState("");
+  const [role, setRole] = useState("");
+  const [opgg, setOpgg] = useState("");
+  const [ign, setIgn] = useState("");
 
   const [pot, setPot] = useState(true);
 
@@ -107,6 +127,7 @@ export default function HorizontalLinearStepper(props) {
 
   function handlePlayerSubmit(event) {
     event.preventDefault();
+    console.log(languages);
     const languagesArr = languages.map((language) => language.label);
     if (password !== confirm) console.log("Passwords do not match!");
     else if (!username) console.log("Username cannot be empty!");
@@ -133,8 +154,6 @@ export default function HorizontalLinearStepper(props) {
         languages: languagesArr,
       };
 
-      console.log(data);
-
       //   fetch("http://localhost:4000/registerP", {
       //     method: "POST",
       //     headers: { "Content-Type": "application/json" },
@@ -154,7 +173,9 @@ export default function HorizontalLinearStepper(props) {
   //       .then((data) => setLocation(data.country));
   //   }, []);
 
-  useEffect(() => {}, [selectedGame]);
+  useEffect(() => {
+    console.log(stats);
+  }, [stats]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -420,11 +441,68 @@ export default function HorizontalLinearStepper(props) {
                     }}
                   >
                     <Typography>{selectedGame.label}</Typography>
-                    <Input placeholder="IGN" />
-                    <Input placeholder="Rank" />
-                    <Input placeholder="Role" />
-                    <Input placeholder="OP.GG link" />
-                    <Button>Done</Button>
+                    <Input
+                      placeholder="IGN"
+                      value={ign}
+                      onChange={(e) => {
+                        setIgn(e.target.value);
+                      }}
+                    />
+                    <Input
+                      placeholder="Rank"
+                      value={rank}
+                      onChange={(e) => {
+                        setRank(e.target.value);
+                      }}
+                    />
+                    <Input
+                      placeholder="Role"
+                      value={role}
+                      onChange={(e) => {
+                        setRole(e.target.value);
+                      }}
+                    />
+                    <Input
+                      placeholder="OP.GG link"
+                      value={opgg}
+                      onChange={(e) => {
+                        setOpgg(e.target.value);
+                      }}
+                    />
+                    <Button
+                      onClick={(e) => {
+                        setStats({
+                          ...stats,
+                          [selectedGame.value]: {
+                            ign: ign,
+                            rank: rank,
+                            role: role,
+                            opgg: opgg,
+                          },
+                        });
+                      }}
+                    >
+                      Done
+                    </Button>
+                  </Box>
+                  <Box>
+                    <ul>
+                      {Object.keys(stats)
+                        .map((statsKey) => (stats[statsKey] ? statsKey : null))
+                        .filter((x) => x)
+                        .map((key) => (
+                          <li
+                            onClick={(e) => {
+                              setRole(stats[key].role);
+                              setOpgg(stats[key].opgg);
+                              setRank(stats[key].rank);
+                              setIgn(stats[key].ign);
+                            }}
+                          >
+                            {games[key]}
+                          </li>
+                        ))}
+                    </ul>
                   </Box>
                 </Box>
               ) : null}
