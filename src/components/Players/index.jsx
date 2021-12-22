@@ -34,8 +34,8 @@ export default function Players(props) {
                   <p className={style.description}>{player.description}</p>
                   <p className={style.gender}>Gender:{player.gender}</p>
                   <p className={style.location}>Location:{player.location}</p>
-                  <img className={style.playerimg} src={player.imagelink} />
                 </div>
+                <img className={style.playerimg} src={player.imagelink} />
               </div>
             </div>
           ))}
