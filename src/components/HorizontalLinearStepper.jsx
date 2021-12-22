@@ -67,6 +67,7 @@ export default function HorizontalLinearStepper(props) {
     valorant: null,
     r6: null,
   });
+  const [showStats, setShowStats] = useState(false);
 
   const games = {
     rl: "Rocket league",
@@ -427,64 +428,70 @@ export default function HorizontalLinearStepper(props) {
                 name="game"
                 options={gamesOptions}
                 value={selectedGame}
-                onChange={(e) => setSelectedGame(e)}
+                onChange={(e) => {
+                  setSelectedGame(e);
+                  setShowStats(true);
+                }}
               />
               {selectedGame.value ? (
                 <Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: "40vw",
-                      margin: "auto",
-                      textAlign: "center",
-                    }}
-                  >
-                    <Typography>{selectedGame.label}</Typography>
-                    <Input
-                      placeholder="IGN"
-                      value={ign}
-                      onChange={(e) => {
-                        setIgn(e.target.value);
-                      }}
-                    />
-                    <Input
-                      placeholder="Rank"
-                      value={rank}
-                      onChange={(e) => {
-                        setRank(e.target.value);
-                      }}
-                    />
-                    <Input
-                      placeholder="Role"
-                      value={role}
-                      onChange={(e) => {
-                        setRole(e.target.value);
-                      }}
-                    />
-                    <Input
-                      placeholder="OP.GG link"
-                      value={opgg}
-                      onChange={(e) => {
-                        setOpgg(e.target.value);
-                      }}
-                    />
-                    <Button
-                      onClick={(e) => {
-                        setStats({
-                          ...stats,
-                          [selectedGame.value]: {
-                            ign: ign,
-                            rank: rank,
-                            role: role,
-                            opgg: opgg,
-                          },
-                        });
+                  {showStats ? (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "40vw",
+                        margin: "auto",
+                        textAlign: "center",
                       }}
                     >
-                      Done
-                    </Button>
-                  </Box>
+                      <Typography>{selectedGame.label}</Typography>
+                      <Input
+                        placeholder="IGN"
+                        value={ign}
+                        onChange={(e) => {
+                          setIgn(e.target.value);
+                        }}
+                      />
+                      <Input
+                        placeholder="Rank"
+                        value={rank}
+                        onChange={(e) => {
+                          setRank(e.target.value);
+                        }}
+                      />
+                      <Input
+                        placeholder="Role"
+                        value={role}
+                        onChange={(e) => {
+                          setRole(e.target.value);
+                        }}
+                      />
+                      <Input
+                        placeholder="OP.GG link"
+                        value={opgg}
+                        onChange={(e) => {
+                          setOpgg(e.target.value);
+                        }}
+                      />
+                      <Button
+                        onClick={(e) => {
+                          setStats({
+                            ...stats,
+                            [selectedGame.value]: {
+                              ign: ign,
+                              rank: rank,
+                              role: role,
+                              opgg: opgg,
+                            },
+                          });
+                          setShowStats(false);
+                        }}
+                      >
+                        Done
+                      </Button>
+                    </Box>
+                  ) : null}
                   <Box>
                     <ul>
                       {Object.keys(stats)
@@ -497,6 +504,11 @@ export default function HorizontalLinearStepper(props) {
                               setOpgg(stats[key].opgg);
                               setRank(stats[key].rank);
                               setIgn(stats[key].ign);
+                              setSelectedGame({
+                                value: key,
+                                label: games[key],
+                              });
+                              setShowStats(true);
                             }}
                           >
                             {games[key]}
@@ -508,7 +520,14 @@ export default function HorizontalLinearStepper(props) {
               ) : null}
             </Box>
           )}
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              pt: 2,
+              justifyContent: "space-between",
+            }}
+          >
             <Button
               color="inherit"
               disabled={activeStep === 0}
