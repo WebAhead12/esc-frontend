@@ -8,6 +8,9 @@ import SentResumes from "./components/SentResumes";
 import Teams from "./components/Teams";
 import Invites from "./components/Invites";
 import Games from "./components/Games";
+import TeamsByGame from "./components/TeamsByGame";
+import PlayersByGame from "./components/PlayersByGame";
+
 import HorizontalLinearStepper from "./components/HorizontalLinearStepper.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -26,10 +29,10 @@ function App() {
   const [showNavbar, setShowNavbar] = React.useState(true);
   const [teamName, setTeamName] = React.useState(null);
   const [username, setUsername] = React.useState(null);
-  const [pot, setPot] = React.useState(true);
+  const [game, setGame] = React.useState(null);
   return (
     <>
-      {showNavbar ? <Navbar pot={pot} /> : null}
+      {showNavbar ? <Navbar /> : null}
       <Routes>
         <Route
           path="/"
@@ -55,6 +58,30 @@ function App() {
               <SelectedPlayer
                 setShowNavbar={setShowNavbar}
                 username={username}
+              />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="TeamByGame"
+          element={
+            <RequireAuth>
+              <TeamsByGame
+                setShowNavbar={setShowNavbar}
+                game={game}
+                setTeamName={setTeamName}
+              />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="PlayersByGame"
+          element={
+            <RequireAuth>
+              <PlayersByGame
+                setShowNavbar={setShowNavbar}
+                game={game}
+                setUsername={setUsername}
               />
             </RequireAuth>
           }
@@ -104,7 +131,11 @@ function App() {
           path="games"
           element={
             <RequireAuth>
-              <Games setShowNavbar={setShowNavbar}></Games>
+              <Games
+                setShowNavbar={setShowNavbar}
+                game={game}
+                setGame={setGame}
+              ></Games>
             </RequireAuth>
           }
         />
