@@ -18,8 +18,18 @@ const checkLogin = () => {
   return !!localStorage.getItem("access_token");
 };
 
+const checkPot = () => {
+  return !!localStorage.getItem("pot");
+};
 function RequireAuth({ children }) {
   return !checkLogin() ? <Navigate to="/" /> : children;
+}
+
+function CheckTeam({ children }) {
+  return checkPot() ? <Navigate to="/" /> : children;
+}
+function CheckPlayer({ children }) {
+  return !checkPot() ? <Navigate to="/" /> : children;
 }
 
 function App() {
@@ -44,7 +54,12 @@ function App() {
           path="SelectedTeam"
           element={
             <RequireAuth>
-              <SelectedTeam setShowNavbar={setShowNavbar} teamName={teamName} />
+              <CheckPlayer>
+                <SelectedTeam
+                  setShowNavbar={setShowNavbar}
+                  teamName={teamName}
+                />
+              </CheckPlayer>
             </RequireAuth>
           }
         />

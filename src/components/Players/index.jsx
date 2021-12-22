@@ -10,6 +10,7 @@ export default function Players(props) {
   } = useFetch("http://localhost:4000/players");
 
   const goTo = useNavigate();
+  props.setShowNavbar(true);
 
   return (
     <main>
