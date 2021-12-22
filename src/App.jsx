@@ -7,6 +7,7 @@ import Register from "./components/Register";
 import SentResumes from "./components/SentResumes";
 import Teams from "./components/Teams";
 import Invites from "./components/Invites";
+import Profile from "./components/Profile"
 import Games from "./components/Games";
 import HorizontalLinearStepper from "./components/HorizontalLinearStepper.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -129,6 +130,14 @@ function App() {
             <HorizontalLinearStepper
               setShowNavbar={setShowNavbar}
             ></HorizontalLinearStepper>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <RequireAuth>
+              <Profile setShowNavbar={setShowNavbar} />
+            </RequireAuth>
           }
         />
       </Routes>
