@@ -36,10 +36,10 @@ function App() {
   const [showNavbar, setShowNavbar] = React.useState(true);
   const [teamName, setTeamName] = React.useState(null);
   const [username, setUsername] = React.useState(null);
-
+  const [pot, setPot] = React.useState(true);
   return (
     <>
-      {showNavbar ? <Navbar /> : null}
+      {showNavbar ? <Navbar pot={pot} /> : null}
       <Routes>
         <Route
           path="/"
