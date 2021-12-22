@@ -24,6 +24,9 @@
   border: 0;
   border-radius: 12px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  margin: auto;
+
+  margin-bottom: 5%;
 }
 .passwordInput {
   padding: 10px;
@@ -35,6 +38,8 @@
   border-radius: 12px;
   border: 0;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  margin: auto;
+  margin-bottom: 5%;
 }
 .loginButton {
   width: 60%;
@@ -45,6 +50,9 @@
   background: #fac81d;
   border-radius: 12px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  display: flex;
+  justify-content: center;
+  margin: auto;
 }
 .text {
   color: gray;

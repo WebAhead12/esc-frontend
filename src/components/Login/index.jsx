@@ -42,7 +42,9 @@ const Login = (props) => {
           if (!res.data.success) {
             setError(res.data.message);
           } else {
+            console.log(res.data);
             localStorage.setItem("access_token", res.data.access_token);
+            localStorage.setItem("pot", "true");
             goTo("/");
           }
         })
@@ -61,6 +63,8 @@ const Login = (props) => {
             setError(res.data.message);
           } else {
             window.localStorage.setItem("access_token", res.data.access_token);
+            localStorage.setItem("pot", "false");
+
             goTo("/");
           }
         })
@@ -105,67 +109,65 @@ const Login = (props) => {
             {" "}
             Team{" "}
           </button>
-          <form onSubmit={onSubmit}>
-            {pot ? (
-              <input
-                type="text"
-                className={style.usernameInput}
-                placeholder="Username"
-                onChange={(e) =>
-                  setUserData({
-                    username: e.target.value,
-                    password: userData.password,
-                  })
-                }
-                required
-              ></input>
-            ) : (
-              <input
-                type="text"
-                className={style.usernameInput}
-                placeholder="Team-name"
-                onChange={(e) => {
-                  console.log(e.target.value);
-                  setTeamData({
-                    teamname: e.target.value,
-                    password: teamData.password,
-                  });
-                }}
-                required
-              ></input>
-            )}
-            {pot ? (
-              <input
-                type="password"
-                className={style.passwordInput}
-                placeholder="Password"
-                onChange={(e) =>
-                  setUserData({
-                    username: userData.username,
-                    password: e.target.value,
-                  })
-                }
-                required
-              ></input>
-            ) : (
-              <input
-                type="password"
-                className={style.passwordInput}
-                placeholder="Password"
-                onChange={(e) =>
-                  setTeamData({
-                    teamname: teamData.teamname,
-                    password: e.target.value,
-                  })
-                }
-                required
-              ></input>
-            )}
-            <button className={style.loginButton} type="submit">
-              {" "}
-              Log-in
-            </button>
-          </form>
+          {pot ? (
+            <input
+              type="text"
+              className={style.usernameInput}
+              placeholder="Username"
+              onChange={(e) =>
+                setUserData({
+                  username: e.target.value,
+                  password: userData.password,
+                })
+              }
+              required
+            ></input>
+          ) : (
+            <input
+              type="text"
+              className={style.usernameInput}
+              placeholder="Team-name"
+              onChange={(e) => {
+                console.log(e.target.value);
+                setTeamData({
+                  teamname: e.target.value,
+                  password: teamData.password,
+                });
+              }}
+              required
+            ></input>
+          )}
+          {pot ? (
+            <input
+              type="password"
+              className={style.passwordInput}
+              placeholder="Password"
+              onChange={(e) =>
+                setUserData({
+                  username: userData.username,
+                  password: e.target.value,
+                })
+              }
+              required
+            ></input>
+          ) : (
+            <input
+              type="password"
+              className={style.passwordInput}
+              placeholder="Password"
+              onChange={(e) =>
+                setTeamData({
+                  teamname: teamData.teamname,
+                  password: e.target.value,
+                })
+              }
+              required
+            ></input>
+          )}
+          <button className={style.loginButton} onClick={onSubmit}>
+            {" "}
+            Log-in
+          </button>
           <br />
           {error && <span class="error">{error}</span>}
           <br />

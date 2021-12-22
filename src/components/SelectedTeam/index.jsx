@@ -95,7 +95,7 @@ function SelectedTeam(props) {
             <img src={team.imagelink} alt="logo" className={style.img} />
           </div>
           <div className={style.buttons}>
-            <button onClick={() => goTo("teams")} className={style.backButton}>
+            <button onClick={() => goTo("/teams")} className={style.backButton}>
               Back
             </button>
             <button

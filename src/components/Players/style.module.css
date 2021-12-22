@@ -34,12 +34,10 @@ h3 {
 
 .playerimg {
   display: flex;
-  align-self: flex-end;
-  justify-self: flex-end;
   z-index: inherit;
   width: 250px;
   height: 250px;
-  margin-left: 20%;
+  margin-left: 50%;
 }
 main {
   margin: 0 auto;

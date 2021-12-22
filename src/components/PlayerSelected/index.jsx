@@ -79,7 +79,7 @@ function SelectedPlayer(props) {
       {isPending && <div>Loading...</div>}
       {player && (
         <div>
-          <div className={style.teamDiv}>
+          <div className={style.playerDiv}>
             <div className={style.upper}>
               <div className={style.textDiv}>
                 <h1 className={style.Name}> {player.username}</h1>
