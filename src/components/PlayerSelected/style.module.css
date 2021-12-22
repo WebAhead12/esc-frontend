@@ -5,7 +5,6 @@
   display: flex;
   font-size: 25px;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
   height: 50%;
   width: 60%;
@@ -22,6 +21,10 @@
 .img {
   height: 50%;
   max-width: 50%;
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+  left: 100px;
 }
 .requirements {
   list-style-type: none;

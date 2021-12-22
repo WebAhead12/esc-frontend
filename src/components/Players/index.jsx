@@ -8,7 +8,7 @@ export default function Players(props) {
     isPending,
     data: players,
   } = useFetch("http://localhost:4000/players");
-
+  console.log(players);
   const goTo = useNavigate();
   props.setShowNavbar(true);
 
@@ -25,8 +25,6 @@ export default function Players(props) {
               key={player.id}
               onClick={() => {
                 props.setUsername(player.username);
-                console.log(props.username);
-
                 goTo("/SelectedPlayer");
               }}
             >
@@ -34,8 +32,10 @@ export default function Players(props) {
                 <div className={style.text}>
                   <h3>{player.username}</h3>
                   <p className={style.description}>{player.description}</p>
+                  <p className={style.gender}>Gender:{player.gender}</p>
+                  <p className={style.location}>Location:{player.location}</p>
+                  <img className={style.playerimg} src={player.imagelink} />
                 </div>
-                <img className={style.playerimg} src={player.imagelink} />
               </div>
             </div>
           ))}

@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { SidebarData } from "./SidebarData";
+import { PSidebarData } from "./PSidebarData";
+import { TSidebarData } from "./TSidebarData";
 import "./Navbar.css";
 import { IconContext } from "react-icons";
 import { useNavigate } from "react-router-dom";
+var check = false;
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
+  const [SideBarData, setSideBarData] = useState(null);
   const goTo = useNavigate();
-
   const showSidebar = () => setSidebar(!sidebar);
+  useEffect(() => {
+    const pot = window.localStorage.getItem("pot");
+    console.log("p", pot);
+    if (pot == "false") {
+      check = false;
+    } else {
+      check = true;
+    }
+  }, []);
 
   return (
     <>
@@ -27,7 +38,7 @@ function Navbar() {
                 <AiIcons.AiOutlineClose />
               </Link>
             </li>
-            {SidebarData.map((item, index) => {
+            {(check ? PSidebarData : TSidebarData).map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>
@@ -57,3 +68,7 @@ function Navbar() {
 }
 
 export default Navbar;
+// if (pot == "false") {
+//   check = false
+// } else {
+//   check = true
