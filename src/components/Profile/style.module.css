@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Quicksand&display=swap");
+
+.playerDiv {
+  font-family: "Orbitron", sans-serif;
+  display: flex;
+  font-size: 25px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 50%;
+  width: 60%;
+  margin: 0 auto;
+  padding: 2%;
+  background: #efefe0;
+  border-radius: 12px;
+  filter: drop-shadow(5px 3px 3px rgba(0, 0, 0, 0.25));
+  margin-top: 2vh;
+}
+.textDiv {
+  text-align: start;
+}
+.img {
+  height: 50%;
+  max-width: 50%;
+}
+.image {
+  display: flex;
+  flex-direction: column;
+  
+}
