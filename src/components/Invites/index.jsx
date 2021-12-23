@@ -48,7 +48,9 @@ export default function Invites(props) {
             <div className={style.invite}>
               <h className="title">{invite.teamname}</h>
               <div className={style.status}>Status:{invite.status}</div>
-              {invite.status != "Pending" ? null : (
+              {invite.status != "Pending" ? (
+                <div>Emails Email:{invite.email} </div>
+              ) : (
                 <div className="answer">
                   <div
                     className={style.decline}

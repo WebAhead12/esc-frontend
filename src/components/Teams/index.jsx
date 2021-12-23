@@ -15,7 +15,7 @@ export default function Teams(props) {
 
   return (
     <main>
-      <div className={style.title}>Teams</div>
+      <div className={style.title}>All Teams</div>
       <div className={style.teams}>
         {error && <div>{error}</div>}
         {isPending && <div>Loading...</div>}

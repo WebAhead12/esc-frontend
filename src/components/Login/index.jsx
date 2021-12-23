@@ -9,11 +9,7 @@ const Login = (props) => {
   const goTo = useNavigate();
   useEffect(() => {
     if (utils.checkLogin()) {
-      if (pot) {
-        goTo("/teams");
-      } else {
-        goTo("/players");
-      }
+      goTo("/games");
     }
   });
   const { setShowNavbar } = props;

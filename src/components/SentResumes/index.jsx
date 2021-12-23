@@ -48,7 +48,9 @@ export default function SentResumes(props) {
             <div className={style.resume}>
               <h className="title">{resume.username}</h>
               <div className={style.status}>Status:{resume.status}</div>
-              {resume.status != "Pending" ? null : (
+              {resume.status != "Pending" ? (
+                <div>Players Email: {resume.email} </div>
+              ) : (
                 <div className="answer">
                   <div
                     className={style.decline}
