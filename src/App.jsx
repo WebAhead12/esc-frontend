@@ -7,6 +7,7 @@ import Register from "./components/Register";
 import SentResumes from "./components/SentResumes";
 import Teams from "./components/Teams";
 import Invites from "./components/Invites";
+import Profile from "./components/Profile"
 import Games from "./components/Games";
 import TeamsByGame from "./components/TeamsByGame";
 import PlayersByGame from "./components/PlayersByGame";
@@ -21,8 +22,18 @@ const checkLogin = () => {
   return !!localStorage.getItem("access_token");
 };
 
+const checkPot = () => {
+  return !!localStorage.getItem("pot");
+};
 function RequireAuth({ children }) {
   return !checkLogin() ? <Navigate to="/" /> : children;
+}
+
+function CheckTeam({ children }) {
+  return checkPot() ? <Navigate to="/" /> : children;
+}
+function CheckPlayer({ children }) {
+  return !checkPot() ? <Navigate to="/" /> : children;
 }
 
 function App() {
@@ -47,7 +58,12 @@ function App() {
           path="SelectedTeam"
           element={
             <RequireAuth>
-              <SelectedTeam setShowNavbar={setShowNavbar} teamName={teamName} />
+              <CheckPlayer>
+                <SelectedTeam
+                  setShowNavbar={setShowNavbar}
+                  teamName={teamName}
+                />
+              </CheckPlayer>
             </RequireAuth>
           }
         />
@@ -145,6 +161,14 @@ function App() {
             <HorizontalLinearStepper
               setShowNavbar={setShowNavbar}
             ></HorizontalLinearStepper>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <RequireAuth>
+              <Profile setShowNavbar={setShowNavbar} />
+            </RequireAuth>
           }
         />
       </Routes>
