@@ -31,8 +31,7 @@ function Profile(props) {
                         setPlayer(data.data[0]);
                     })
 
-            }
-            else {
+            } else if (pot === "false") {
                 let token = localStorage.getItem("access_token")
                 let config = {
                     headers: {
@@ -59,12 +58,12 @@ function Profile(props) {
     return (
         <div>
 
-            {player ?
+            {player || team ?
                 < div className={style.playerDiv} >
                     <div>
                         <div className={style.teamDiv}>
                             <div className={style.upper}>
-                                {pot ? (
+                                {pot === "true" ? (
                                     <div className={style.textDiv}>
                                         <h1 className={style.Name}> {player.username}</h1>
                                         <p className={style.description}>
@@ -77,25 +76,33 @@ function Profile(props) {
                                             Registration Data :{player.registerdate.replace(player.registerdate.match(/T.+/g), "")}
 
                                         </p>
+                                        <div className={style.image}>
+                                            <img src={player.imagelink} alt="logo" className={style.img} />
+                                        </div>
                                     </div>
                                 ) : (
                                     <div className={style.textDiv}>
                                         <h1 className={style.Name}> {team.username}</h1>
                                         <p className={style.description}>
                                             About {team.username}:<br />
-                                            Fullname: {team.firstname + " " + team.lastname}<br />
+                                            TeamName: {team.name}<br />
                                             Email: {team.email}<br />
-                                            Location:{team.location}<br />
+                                            Game: {team.game}<br />
+                                            Requirements: {team.requirements}<br />
                                             languages:{team.languages}<br />
-                                            Date:{team.age}<br />
-                                            Registration Data :{team.registerdate.replace(team.registerdate.match(/T.+/g), "")}
+                                            {/* Registration Data :{team.registerdate.replace(team.registerdate.match(/T.+/g), "")} */}
 
                                         </p>
+                                        <div className={style.image}>
+                                            <img src={team.imagelink} alt="logo" className={style.img} />
+                                        </div>
                                     </div>
                                 )}
-                                <div className={style.image}>
-                                    <img src={player.imagelink} alt="logo" className={style.img} />
-                                </div>
+                                {pot === "true" ? (
+
+                                ): (
+
+                                    )}
                             </div>
                         </div>
                     </div>
