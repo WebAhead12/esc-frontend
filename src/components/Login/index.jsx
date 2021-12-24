@@ -39,8 +39,8 @@ const Login = (props) => {
         .post(`${api}/loginP`, userData)
         .then((res) => {
           setLoading(false);
-          console.log("IM IN");
-          if (!res.success) {
+          console.log(res);
+          if (res.status != 200) {
             setError(res.data.status);
           } else {
             console.log(res.data);
