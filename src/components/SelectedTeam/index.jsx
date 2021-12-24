@@ -2,8 +2,8 @@ import style from "./style.module.css";
 import useFetch from "../../fetch";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import dotenv from "dotenv";
-dotenv.config();
+
+const api = "https://escbackend.herokuapp.com";
 
 function SelectedTeam(props) {
   const goTo = useNavigate();
@@ -17,16 +17,14 @@ function SelectedTeam(props) {
     error,
     isPending,
     data: data,
-  } = useFetch(
-    `${process.env.REACT_APP_API_URL}/Selectedteams/${props.teamName}`
-  );
+  } = useFetch(`${api}/Selectedteams/${props.teamName}`);
 
   useEffect(() => {
     if (!data) return;
 
     const team = data ? data[0] : null;
 
-    fetch(`${process.env.REACT_APP_API_URL}/checkRequests`, {
+    fetch(`${api}/checkRequests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +53,7 @@ function SelectedTeam(props) {
 
   function addResume(teamid) {
     if (answer) {
-      fetch(`${process.env.REACT_APP_API_URL}/addRequests`, {
+      fetch(`${api}/addRequests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

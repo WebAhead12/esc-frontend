@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import utils from "../../utils/loginAuth.js";
-import dotenv from "dotenv";
-dotenv.config();
+const api = "https://escbackend.herokuapp.com";
 
 const Login = (props) => {
   //set navbar to hidden on this page
@@ -37,7 +36,7 @@ const Login = (props) => {
     setLoading(true);
     if (pot == true) {
       axios
-        .post(`${process.env.REACT_APP_API_URL}/loginP`, userData)
+        .post(`${api}/loginP`, userData)
         .then((res) => {
           setLoading(false);
           console.log("IM IN");
@@ -56,7 +55,7 @@ const Login = (props) => {
         });
     } else {
       axios
-        .post(`${process.env.REACT_APP_API_URL}/loginT`, teamData)
+        .post(`${api}/loginT`, teamData)
         .then((res) => {
           setLoading(false);
 

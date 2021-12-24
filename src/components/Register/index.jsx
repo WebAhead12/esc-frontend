@@ -14,6 +14,8 @@ import style from "./style.module.css";
 import { useNavigate } from "react-router-dom";
 const steps = ["Add account info", "Add stats"];
 
+const api = "https://escbackend.herokuapp.com";
+
 function validateEmail(emailAdress) {
   let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (emailAdress.match(regexEmail)) {
@@ -105,7 +107,7 @@ export default function Register(props) {
       requirements: requirements,
     };
     console.log(data);
-    fetch(`${process.env.REACT_APP_API_URL}/registerT`, {
+    fetch(`${api}/registerT`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -140,7 +142,7 @@ export default function Register(props) {
       stats: stats,
     };
 
-    fetch(`${process.env.REACT_APP_API_URL}/registerP`, {
+    fetch(`${api}/registerP`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

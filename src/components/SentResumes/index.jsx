@@ -1,8 +1,8 @@
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import useFetch from "../../fetch";
-import dotenv from "dotenv";
-dotenv.config();
+
+const api = "https://escbackend.herokuapp.com";
 
 export default function SentResumes(props) {
   const [status, setStatus] = useState("pending");
@@ -11,14 +11,10 @@ export default function SentResumes(props) {
   const { setShowNavbar } = props;
   setShowNavbar(true);
 
-  const {
-    error,
-    isPending,
-    data: resumes,
-  } = useFetch(`${process.env.REACT_APP_API_URL}/requests`);
+  const { error, isPending, data: resumes } = useFetch(`${api}/requests`);
 
   function updateResume(playerid, status) {
-    fetch(`${process.env.REACT_APP_API_URL}/updateRequests`, {
+    fetch(`${api}/updateRequests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -5,11 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default function Players(props) {
-  const {
-    error,
-    isPending,
-    data: players,
-  } = useFetch(`${process.env.REACT_APP_API_URL}/players`);
+  const { error, isPending, data: players } = useFetch(`${api}/players`);
   console.log(players);
   const goTo = useNavigate();
   props.setShowNavbar(true);

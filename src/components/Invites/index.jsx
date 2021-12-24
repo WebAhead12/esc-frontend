@@ -11,14 +11,10 @@ export default function Invites(props) {
   const { setShowNavbar } = props;
   setShowNavbar(true);
 
-  const {
-    error,
-    isPending,
-    data: invites,
-  } = useFetch(`${process.env.REACT_APP_API_URL}/invites`);
+  const { error, isPending, data: invites } = useFetch(`${api}/invites`);
 
   function updateInvite(teamid, status) {
-    fetch(`${process.env.REACT_APP_API_URL}/updateInvites`, {
+    fetch(`${api}/updateInvites`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

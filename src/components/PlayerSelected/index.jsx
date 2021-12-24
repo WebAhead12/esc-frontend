@@ -2,9 +2,7 @@ import style from "./style.module.css";
 import useFetch from "../../fetch";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import dotenv from "dotenv";
-dotenv.config();
-
+const api = "https://escbackend.herokuapp.com";
 function SelectedPlayer(props) {
   const goTo = useNavigate();
 
@@ -17,16 +15,14 @@ function SelectedPlayer(props) {
     error,
     isPending,
     data: data,
-  } = useFetch(
-    `${process.env.REACT_APP_API_URL}/Selectedplayer/${props.username}`
-  );
+  } = useFetch(`${api}/Selectedplayer/${props.username}`);
 
   useEffect(() => {
     if (!data) return;
 
     const player = data ? data[0] : null;
 
-    fetch(`${process.env.REACT_APP_API_URL}/checkInvites`, {
+    fetch(`${api}/checkInvites`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +51,7 @@ function SelectedPlayer(props) {
 
   function addInvite(playerid) {
     if (answer) {
-      fetch(`${process.env.REACT_APP_API_URL}/addInvites`, {
+      fetch(`${api}/addInvites`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -3,8 +3,7 @@ import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import dotenv from "dotenv";
-dotenv.config();
+const api = "https://escbackend.herokuapp.com";
 
 function Profile(props) {
   const goTo = useNavigate();
@@ -39,12 +38,10 @@ function Profile(props) {
             authorization: `Bearer ${token}`,
           },
         };
-        axios
-          .get(`${process.env.REACT_APP_API_URL}/playerProfile`, config)
-          .then((data) => {
-            console.log(data.data[0]);
-            setPlayer(data.data[0]);
-          });
+        axios.get(`${api}/playerProfile`, config).then((data) => {
+          console.log(data.data[0]);
+          setPlayer(data.data[0]);
+        });
       } else if (pot === "false") {
         let token = localStorage.getItem("access_token");
         let config = {
@@ -52,12 +49,10 @@ function Profile(props) {
             authorization: `Bearer ${token}`,
           },
         };
-        axios
-          .get(`${process.env.REACT_APP_API_URL}/teamProfile`, config)
-          .then((data) => {
-            console.log(data.data[0]);
-            setTeam(data.data[0]);
-          });
+        axios.get(`${api}/teamProfile`, config).then((data) => {
+          console.log(data.data[0]);
+          setTeam(data.data[0]);
+        });
       }
     }
   }, [pot]);
