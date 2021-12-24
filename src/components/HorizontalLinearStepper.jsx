@@ -13,7 +13,7 @@ import { gamesOptions } from "../utils/games.js";
 import style from "./Register/style.module.css";
 import { useNavigate } from "react-router-dom";
 
-const steps = ["Add account info", "Add stats", "Choose where to go"];
+const steps = ["Add account info", "Add stats"];
 
 function validateEmail(emailAdress) {
   let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -38,6 +38,7 @@ export default function HorizontalLinearStepper(props) {
     { value: "female", label: "Female" },
     { value: "other", label: "Other" },
   ];
+  const [error, setError] = useState("");
   const [teamname, setTeamname] = useState("");
   const [game, setGame] = useState("");
   const [description, setDescription] = useState("");
@@ -81,105 +82,141 @@ export default function HorizontalLinearStepper(props) {
     dota2: "Dota 2",
     valorant: "Valorant",
   };
-  const [kda, setKda] = useState("");
   const [rank, setRank] = useState("");
   const [role, setRole] = useState("");
   const [opgg, setOpgg] = useState("");
   const [ign, setIgn] = useState("");
 
+  const [requirements, setRequirements] = useState({
+    rank: null,
+    role: null,
+  });
+
   const [pot, setPot] = useState(true);
 
   function handleTeamSubmit(event) {
-    event.preventDefault();
-    if (password !== confirm) console.log("Passwords do not match!");
-    else if (!teamname) console.log("Username cannot be empty!");
-    else if (!password) console.log("Password cannot be empty!");
-    else if (!email) console.log("Email cannot be empty!");
-    else if (!validateEmail(email)) console.log("Invalid email!");
-    else if (!game) console.log("Please enter your gender!");
-    else if (!description) console.log("Please enter a description");
-    else {
-      const data = {
-        username: username,
-        name: teamname,
-        password: password,
-        email: email,
-        game: game,
-        imagelink: imagelink,
-        description: description,
-      };
-      fetch("http://localhost:4000/registerT", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+    const data = {
+      teamname: username,
+      name: teamname,
+      password: password,
+      email: email,
+      game: game.value,
+      imagelink: imagelink,
+      description: description,
+      requirements: requirements,
+    };
+    console.log(data);
+    fetch("http://localhost:4000/registerT", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        return response.json();
       })
-        .then((response) => {
-          if (!response.ok) throw new Error(response.status);
-          return response.json();
-        })
-        .then((data) => {
-          if (data.status == "success") {
-            goTo("/");
-          }
-        })
-        .catch(console.error);
-    }
+      .then((data) => {
+        if (data.status == "success") {
+          goTo("/");
+        } else {
+          setError(data.status);
+        }
+      })
+      .catch((error) => console.log(error));
   }
 
   function handlePlayerSubmit(event) {
-    event.preventDefault();
-    console.log(languages);
     const languagesArr = languages.map((language) => language.label);
-    if (password !== confirm) console.log("Passwords do not match!");
-    else if (!username) console.log("Username cannot be empty!");
-    else if (!password) console.log("Password cannot be empty!");
-    else if (!email) console.log("Email cannot be empty!");
-    else if (!validateEmail(email)) console.log("Invalid email!");
-    else if (!gender) console.log("Please enter your gender!");
-    else if (languages.length < 1)
-      console.log("Please enter atleast 1 language!");
-    else if (!firstname) console.log("First name cannot be empty!");
-    else if (!lastname) console.log("Last name cannot be empty");
-    else if (!date) console.log("Please enter date of birth");
-    else {
-      const data = {
-        username: username,
-        password: password,
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        date: date,
-        gender: gender.value,
-        location: location,
-        imagelink,
-        languages: languagesArr,
-      };
 
-      //   fetch("http://localhost:4000/registerP", {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify(data),
-      //   })
-      //     .then((response) => {
-      //       console.log(response);
-      //     })
-      //     .catch(console.error);
-    }
+    const data = {
+      username: username,
+      password: password,
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      date: date,
+      gender: gender.value,
+      location: location,
+      imagelink,
+      languages: languagesArr,
+      stats: stats,
+    };
+
+    fetch("http://localhost:4000/registerP", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("response", data);
+        if (data.status == "success") {
+          goTo("/");
+        } else {
+          setError(data.status);
+        }
+      })
+      .catch(console.error);
   }
 
-  //   useEffect(() => {
-  //     let apiKey = "d070a65e781d4eb38537345be1a7ff3b";
-  //     fetch("https://ipgeolocation.abstractapi.com/v1/?api_key=" + apiKey)
-  //       .then((response) => response.json())
-  //       .then((data) => setLocation(data.country));
-  //   }, []);
+  // useEffect(() => {
+  //   let apiKey = "d070a65e781d4eb38537345be1a7ff3b";
+  //   fetch("https://ipgeolocation.abstractapi.com/v1/?api_key=" + apiKey)
+  //     .then((response) => response.json())
+  //     .then((data) => setLocation(data.country));
+  // }, []);
 
-  useEffect(() => {
-    console.log(stats);
-  }, [stats]);
+  // useEffect(() => {
+  //   console.log(requirements);
+  // }, [requirements]);
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (pot) {
+      if (password !== confirm) setError("Passwords do not match!");
+      else if (!username) setError("Username cannot be empty!");
+      else if (!password) setError("Password cannot be empty!");
+      else if (!email) setError("Email cannot be empty!");
+      else if (!validateEmail(email)) setError("Invalid email!");
+      else if (!gender) setError("Please enter your gender!");
+      else if (languages.length < 1)
+        setError("Please enter atleast 1 language!");
+      else if (!firstname) setError("First name cannot be empty!");
+      else if (!lastname) setError("Last name cannot be empty");
+      else if (!date) setError("Please enter date of birth");
+      else {
+        setError("");
+        if (activeStep == steps.length - 1) {
+          if (pot) {
+            handlePlayerSubmit();
+          } else {
+            handleTeamSubmit();
+          }
+        }
+        if (activeStep === steps.length - 1) return;
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    } else {
+      if (password !== confirm) setError("Passwords do not match!");
+      else if (!teamname) setError("Username cannot be empty!");
+      else if (!password) setError("Password cannot be empty!");
+      else if (!email) setError("Email cannot be empty!");
+      else if (!validateEmail(email)) setError("Invalid email!");
+      else if (!game) setError("Please enter your gender!");
+      else if (!description) setError("Please enter a description");
+      else {
+        setError("");
+        if (activeStep == steps.length - 1) {
+          if (pot) {
+            handlePlayerSubmit();
+          } else {
+            handleTeamSubmit();
+          }
+        }
+        if (activeStep === steps.length - 1) return;
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    }
   };
 
   const handleBack = () => {
@@ -203,345 +240,367 @@ export default function HorizontalLinearStepper(props) {
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-          {activeStep === 0 ? (
-            pot ? (
-              <div>
-                <h1 className={style.title}>Register</h1>
-                <div className={style.register}>
-                  <img></img>
-                  <button
-                    className={style.playerButton}
-                    onClick={(e) => {
-                      setPot(true);
+      <React.Fragment>
+        {activeStep === 0 ? (
+          pot ? (
+            <Box>
+              <h1 className={style.title}>Register</h1>
+              <div className={style.register}>
+                <img></img>
+                <button
+                  className={style.playerButton}
+                  onClick={(e) => {
+                    setPot(true);
+                  }}
+                >
+                  Player
+                </button>
+                <button
+                  className={style.teamButton}
+                  onClick={(e) => {
+                    setPot(false);
+                  }}
+                >
+                  Team
+                </button>
+                <form>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm password"
+                    value={confirm}
+                    onChange={(e) => setConfirm(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    id="fname"
+                    name="fname"
+                    placeholder="First name"
+                    value={firstname}
+                    onChange={(e) => setfName(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    id="lname"
+                    name="lname"
+                    placeholder="Last name"
+                    value={lastname}
+                    onChange={(e) => setlName(e.target.value)}
+                  />
+                  <Select
+                    className={style.gender}
+                    isSearchable={true}
+                    name="gender"
+                    options={genderOptions}
+                    value={gender}
+                    onChange={(e) => setGender(e)}
+                  />
+                  <Select
+                    className={style.languages}
+                    isMulti
+                    isSearchable={true}
+                    name="languages"
+                    options={languagesOptions}
+                    value={languages}
+                    onChange={(e) => {
+                      setLanguages(e);
+                    }}
+                  />
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    id="imglink"
+                    name="imglink"
+                    placeholder="Profile picture"
+                    value={imagelink}
+                    onChange={(e) => setImgLink(e.target.value)}
+                  />
+                </form>
+                <a href="/">Already have an account?</a>
+              </div>
+            </Box>
+          ) : (
+            <div>
+              <h1 className={style.title}>Register</h1>
+              <div className={style.register}>
+                <img></img>
+                <button
+                  className={style.playerButton}
+                  onClick={(e) => {
+                    setPot(true);
+                  }}
+                >
+                  Player
+                </button>
+                <button
+                  className={style.teamButton}
+                  onClick={(e) => {
+                    setPot(false);
+                  }}
+                >
+                  Team
+                </button>
+                <form>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    id="teamname"
+                    name="teamname"
+                    placeholder="Team name"
+                    value={teamname}
+                    onChange={(e) => setTeamname(e.target.value)}
+                  />
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm password"
+                    value={confirm}
+                    onChange={(e) => setConfirm(e.target.value)}
+                  />
+                  <Select
+                    className={style.gender}
+                    isSearchable={true}
+                    name="game"
+                    options={gamesOptions}
+                    value={game}
+                    onChange={(e) => setGame(e)}
+                  />
+                  <input
+                    type="text"
+                    id="description"
+                    name="description"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    id="imglink"
+                    name="imglink"
+                    placeholder="Team picture"
+                    value={imagelink}
+                    onChange={(e) => setImgLink(e.target.value)}
+                  />
+                </form>
+                <a href="/">Already have an account?</a>
+              </div>
+            </div>
+          )
+        ) : pot ? (
+          <Box>
+            <Select
+              className={style.gender}
+              isSearchable={true}
+              name="game"
+              options={gamesOptions}
+              value={selectedGame}
+              onChange={(e) => {
+                setSelectedGame(e);
+                setShowStats(true);
+              }}
+            />
+            {selectedGame.value ? (
+              <Box>
+                {showStats ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "40vw",
+                      margin: "auto",
+                      textAlign: "center",
                     }}
                   >
-                    Player
-                  </button>
-                  <button
-                    className={style.teamButton}
-                    onClick={(e) => {
-                      setPot(false);
-                    }}
-                  >
-                    Team
-                  </button>
-                  <form onSubmit={handlePlayerSubmit}>
-                    <input
-                      type="text"
-                      id="username"
-                      name="username"
-                      placeholder="Username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="Email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      placeholder="Confirm password"
-                      value={confirm}
-                      onChange={(e) => setConfirm(e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      id="fname"
-                      name="fname"
-                      placeholder="First name"
-                      value={firstname}
-                      onChange={(e) => setfName(e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      id="lname"
-                      name="lname"
-                      placeholder="Last name"
-                      value={lastname}
-                      onChange={(e) => setlName(e.target.value)}
-                    />
-                    <Select
-                      className={style.gender}
-                      isSearchable={true}
-                      name="gender"
-                      options={genderOptions}
-                      value={gender}
-                      onChange={(e) => setGender(e)}
-                    />
-                    <Select
-                      className={style.languages}
-                      isMulti
-                      isSearchable={true}
-                      name="languages"
-                      options={languagesOptions}
-                      value={languages}
+                    <Typography>{selectedGame.label}</Typography>
+                    <Input
+                      placeholder="IGN"
+                      value={ign}
                       onChange={(e) => {
-                        setLanguages(e);
+                        setIgn(e.target.value);
                       }}
                     />
-                    <input
-                      type="date"
-                      id="date"
-                      name="date"
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
+                    <Input
+                      placeholder="Rank"
+                      value={rank}
+                      onChange={(e) => {
+                        setRank(e.target.value);
+                      }}
                     />
-                    <input
-                      type="text"
-                      id="imglink"
-                      name="imglink"
-                      placeholder="Profile picture"
-                      value={imagelink}
-                      onChange={(e) => setImgLink(e.target.value)}
+                    <Input
+                      placeholder="Role"
+                      value={role}
+                      onChange={(e) => {
+                        setRole(e.target.value);
+                      }}
                     />
-                    <button type="submit">Create an account</button>
-                  </form>
-                  <a href="/">Already have an account?</a>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <h1 className={style.title}>Register</h1>
-                <div className={style.register}>
-                  <img></img>
-                  <button
-                    className={style.playerButton}
-                    onClick={(e) => {
-                      setPot(true);
-                    }}
-                  >
-                    Player
-                  </button>
-                  <button
-                    className={style.teamButton}
-                    onClick={(e) => {
-                      setPot(false);
-                    }}
-                  >
-                    Team
-                  </button>
-                  <form onSubmit={handleTeamSubmit}>
-                    <input
-                      type="text"
-                      id="username"
-                      name="username"
-                      placeholder="Username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                    <Input
+                      placeholder="OP.GG link"
+                      value={opgg}
+                      onChange={(e) => {
+                        setOpgg(e.target.value);
+                      }}
                     />
-                    <input
-                      type="text"
-                      id="teamname"
-                      name="teamname"
-                      placeholder="Team name"
-                      value={teamname}
-                      onChange={(e) => setTeamname(e.target.value)}
-                    />
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="Email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      placeholder="Confirm password"
-                      value={confirm}
-                      onChange={(e) => setConfirm(e.target.value)}
-                    />
-                    <Select
-                      className={style.gender}
-                      isSearchable={true}
-                      name="game"
-                      options={gamesOptions}
-                      value={game}
-                      onChange={(e) => setGame(e)}
-                    />
-                    <input
-                      type="text"
-                      id="description"
-                      name="description"
-                      placeholder="Description"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      id="imglink"
-                      name="imglink"
-                      placeholder="Team picture"
-                      value={imagelink}
-                      onChange={(e) => setImgLink(e.target.value)}
-                    />
-
-                    <button type="submit">Create an account</button>
-                  </form>
-                  <a href="/">Already have an account?</a>
-                </div>
-              </div>
-            )
-          ) : (
-            <Box>
-              <Button>+</Button>
-              <Select
-                className={style.gender}
-                isSearchable={true}
-                name="game"
-                options={gamesOptions}
-                value={selectedGame}
-                onChange={(e) => {
-                  setSelectedGame(e);
-                  setShowStats(true);
-                }}
-              />
-              {selectedGame.value ? (
-                <Box>
-                  {showStats ? (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "40vw",
-                        margin: "auto",
-                        textAlign: "center",
+                    <Button
+                      onClick={(e) => {
+                        setStats({
+                          ...stats,
+                          [selectedGame.value]: {
+                            ign: ign,
+                            rank: rank,
+                            role: role,
+                            opgg: opgg,
+                          },
+                        });
+                        setShowStats(false);
                       }}
                     >
-                      <Typography>{selectedGame.label}</Typography>
-                      <Input
-                        placeholder="IGN"
-                        value={ign}
-                        onChange={(e) => {
-                          setIgn(e.target.value);
-                        }}
-                      />
-                      <Input
-                        placeholder="Rank"
-                        value={rank}
-                        onChange={(e) => {
-                          setRank(e.target.value);
-                        }}
-                      />
-                      <Input
-                        placeholder="Role"
-                        value={role}
-                        onChange={(e) => {
-                          setRole(e.target.value);
-                        }}
-                      />
-                      <Input
-                        placeholder="OP.GG link"
-                        value={opgg}
-                        onChange={(e) => {
-                          setOpgg(e.target.value);
-                        }}
-                      />
-                      <Button
-                        onClick={(e) => {
-                          setStats({
-                            ...stats,
-                            [selectedGame.value]: {
-                              ign: ign,
-                              rank: rank,
-                              role: role,
-                              opgg: opgg,
-                            },
-                          });
-                          setShowStats(false);
-                        }}
-                      >
-                        Done
-                      </Button>
-                    </Box>
-                  ) : null}
-                  <Box>
-                    <ul>
-                      {Object.keys(stats)
-                        .map((statsKey) => (stats[statsKey] ? statsKey : null))
-                        .filter((x) => x)
-                        .map((key) => (
-                          <li
-                            onClick={(e) => {
-                              setRole(stats[key].role);
-                              setOpgg(stats[key].opgg);
-                              setRank(stats[key].rank);
-                              setIgn(stats[key].ign);
-                              setSelectedGame({
-                                value: key,
-                                label: games[key],
-                              });
-                              setShowStats(true);
-                            }}
-                          >
-                            {games[key]}
-                          </li>
-                        ))}
-                    </ul>
+                      Done
+                    </Button>
                   </Box>
+                ) : null}
+                <Box>
+                  <ul>
+                    {Object.keys(stats)
+                      .map((statsKey) => (stats[statsKey] ? statsKey : null))
+                      .filter((x) => x)
+                      .map((key) => (
+                        <li
+                          onClick={(e) => {
+                            setRole(stats[key].role);
+                            setOpgg(stats[key].opgg);
+                            setRank(stats[key].rank);
+                            setIgn(stats[key].ign);
+                            setSelectedGame({
+                              value: key,
+                              label: games[key],
+                            });
+                            setShowStats(true);
+                          }}
+                        >
+                          {games[key]}
+                        </li>
+                      ))}
+                  </ul>
                 </Box>
-              ) : null}
-            </Box>
-          )}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              pt: 2,
-              justifyContent: "space-between",
-            }}
-          >
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
+              </Box>
+            ) : null}
           </Box>
-        </React.Fragment>
-      )}
+        ) : (
+          <Box>
+            <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "40vw",
+                  margin: "auto",
+                  textAlign: "center",
+                }}
+              >
+                <Typography sx={{ fontFamily: "Orbitron, sans-serif" }}>
+                  {game.label} Requirements
+                </Typography>
+                <Input
+                  placeholder="Rank"
+                  value={requirements.rank}
+                  onChange={(e) => {
+                    setRequirements({
+                      ...requirements,
+                      rank: e.target.value,
+                    });
+                  }}
+                />
+                <Input
+                  placeholder="Role"
+                  value={requirements.role}
+                  onChange={(e) => {
+                    setRequirements({
+                      ...requirements,
+                      role: e.target.value,
+                    });
+                  }}
+                />
+              </Box>
+            </Box>
+          </Box>
+        )}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            pt: 2,
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            color="inherit"
+            disabled={activeStep === 0}
+            onClick={handleBack}
+            sx={{ mr: 1 }}
+          >
+            Back
+          </Button>
+          <Button onClick={handleNext}>
+            {activeStep === steps.length - 1 ? "Finish" : "Next"}
+          </Button>
+          <span>{error}</span>
+        </Box>
+      </React.Fragment>
     </Box>
   );
 }

@@ -19,7 +19,7 @@ export const TSidebarData = [
     cName: "nav-text",
   },
   {
-    title: "requests",
+    title: "Requests",
     path: "/requests",
     icon: <FaIcons.FaFileAlt />,
     cName: "nav-text",

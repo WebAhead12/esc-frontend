@@ -52,6 +52,7 @@ function Navbar() {
               className="nav-text"
               onClick={(e) => {
                 localStorage.removeItem("access_token");
+                localStorage.removeItem("pot");
                 goTo("/");
               }}
             >

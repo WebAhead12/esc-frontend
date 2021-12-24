@@ -7,7 +7,7 @@ import Register from "./components/Register";
 import SentResumes from "./components/SentResumes";
 import Teams from "./components/Teams";
 import Invites from "./components/Invites";
-import Profile from "./components/Profile"
+import Profile from "./components/Profile";
 import Games from "./components/Games";
 import HorizontalLinearStepper from "./components/HorizontalLinearStepper.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -42,11 +42,7 @@ function App() {
     <>
       {showNavbar ? <Navbar pot={pot} /> : null}
       <Routes>
-        <Route
-          path="/"
-          exact
-          element={<Login setShowNavbar={setShowNavbar} />}
-        />
+        <Route path="/" element={<Login setShowNavbar={setShowNavbar} />} />
         <Route
           path="register"
           element={<Register setShowNavbar={setShowNavbar} />}
@@ -139,6 +135,10 @@ function App() {
               <Profile setShowNavbar={setShowNavbar} />
             </RequireAuth>
           }
+        />
+        <Route
+          path="*"
+          element={<Login setShowNavbar={setShowNavbar}></Login>}
         />
       </Routes>
     </>

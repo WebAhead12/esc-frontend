@@ -38,9 +38,9 @@ const Login = (props) => {
         .post("http://localhost:4000/loginP", userData)
         .then((res) => {
           setLoading(false);
-
-          if (!res.data.success) {
-            setError(res.data.message);
+          console.log("IM IN");
+          if (!res.success) {
+            setError(res.data.status);
           } else {
             console.log(res.data);
             localStorage.setItem("access_token", res.data.access_token);
@@ -49,11 +49,10 @@ const Login = (props) => {
           }
         })
         .catch((err) => {
-          setError(err.message);
+          setError(err.response.data.status);
           setLoading(false);
         });
     } else {
-      console.log(teamData);
       axios
         .post("http://localhost:4000/loginT", teamData)
         .then((res) => {
@@ -69,7 +68,7 @@ const Login = (props) => {
           }
         })
         .catch((err) => {
-          setError(err.message);
+          setError(err.response.data.status);
           setLoading(false);
         });
     }
