@@ -3,6 +3,8 @@ import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import dotenv from "dotenv";
+dotenv.config();
 
 function Profile(props) {
   const goTo = useNavigate();
@@ -38,7 +40,7 @@ function Profile(props) {
           },
         };
         axios
-          .get("http://localhost:4000/playerProfile", config)
+          .get(`${process.env.REACT_APP_API_URL}/playerProfile`, config)
           .then((data) => {
             console.log(data.data[0]);
             setPlayer(data.data[0]);
@@ -50,10 +52,12 @@ function Profile(props) {
             authorization: `Bearer ${token}`,
           },
         };
-        axios.get("http://localhost:4000/teamProfile", config).then((data) => {
-          console.log(data.data[0]);
-          setTeam(data.data[0]);
-        });
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/teamProfile`, config)
+          .then((data) => {
+            console.log(data.data[0]);
+            setTeam(data.data[0]);
+          });
       }
     }
   }, [pot]);

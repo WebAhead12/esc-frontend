@@ -1,5 +1,8 @@
 import style from "./style.module.css";
 import react from "react";
+import dotenv from "dotenv";
+dotenv.config();
+
 function Games(props) {
   const { setShowNavbar } = props;
   setShowNavbar(true);

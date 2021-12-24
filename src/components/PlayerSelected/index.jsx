@@ -2,6 +2,8 @@ import style from "./style.module.css";
 import useFetch from "../../fetch";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import dotenv from "dotenv";
+dotenv.config();
 
 function SelectedPlayer(props) {
   const goTo = useNavigate();
@@ -15,14 +17,16 @@ function SelectedPlayer(props) {
     error,
     isPending,
     data: data,
-  } = useFetch(`http://localhost:4000/Selectedplayer/${props.username}`);
+  } = useFetch(
+    `${process.env.REACT_APP_API_URL}/Selectedplayer/${props.username}`
+  );
 
   useEffect(() => {
     if (!data) return;
 
     const player = data ? data[0] : null;
 
-    fetch(`http://localhost:4000/checkInvites`, {
+    fetch(`${process.env.REACT_APP_API_URL}/checkInvites`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +55,7 @@ function SelectedPlayer(props) {
 
   function addInvite(playerid) {
     if (answer) {
-      fetch(`http://localhost:4000/addInvites`, {
+      fetch(`${process.env.REACT_APP_API_URL}/addInvites`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

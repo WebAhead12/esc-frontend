@@ -1,6 +1,8 @@
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import useFetch from "../../fetch";
+import dotenv from "dotenv";
+dotenv.config();
 
 export default function Invites(props) {
   const [status, setStatus] = useState("pending");
@@ -13,10 +15,10 @@ export default function Invites(props) {
     error,
     isPending,
     data: invites,
-  } = useFetch("http://localhost:4000/invites");
+  } = useFetch(`${process.env.REACT_APP_API_URL}/invites`);
 
   function updateInvite(teamid, status) {
-    fetch(`http://localhost:4000/updateInvites`, {
+    fetch(`${process.env.REACT_APP_API_URL}/updateInvites`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

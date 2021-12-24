@@ -11,10 +11,9 @@ import Profile from "./components/Profile";
 import Games from "./components/Games";
 import HorizontalLinearStepper from "./components/HorizontalLinearStepper.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
-
 import React from "react";
 import SelectedPlayer from "./components/PlayerSelected";
-
+require("dotenv").config();
 const checkLogin = () => {
   return !!localStorage.getItem("access_token");
 };

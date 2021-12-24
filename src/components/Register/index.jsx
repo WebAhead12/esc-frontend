@@ -12,7 +12,6 @@ import { languagesOptions } from "../../utils/languages.js";
 import { gamesOptions } from "../../utils/games.js";
 import style from "./style.module.css";
 import { useNavigate } from "react-router-dom";
-
 const steps = ["Add account info", "Add stats"];
 
 function validateEmail(emailAdress) {
@@ -106,7 +105,7 @@ export default function Register(props) {
       requirements: requirements,
     };
     console.log(data);
-    fetch("http://localhost:4000/registerT", {
+    fetch(`${process.env.REACT_APP_API_URL}/registerT`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -141,7 +140,7 @@ export default function Register(props) {
       stats: stats,
     };
 
-    fetch("http://localhost:4000/registerP", {
+    fetch(`${process.env.REACT_APP_API_URL}/registerP`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -160,16 +159,12 @@ export default function Register(props) {
       .catch(console.error);
   }
 
-  // useEffect(() => {
-  //   let apiKey = "d070a65e781d4eb38537345be1a7ff3b";
-  //   fetch("https://ipgeolocation.abstractapi.com/v1/?api_key=" + apiKey)
-  //     .then((response) => response.json())
-  //     .then((data) => setLocation(data.country));
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(requirements);
-  // }, [requirements]);
+  useEffect(() => {
+    let apiKey = "d070a65e781d4eb38537345be1a7ff3b";
+    fetch("https://ipgeolocation.abstractapi.com/v1/?api_key=" + apiKey)
+      .then((response) => response.json())
+      .then((data) => setLocation(data.country));
+  }, []);
 
   const handleNext = () => {
     if (pot) {
@@ -221,10 +216,6 @@ export default function Register(props) {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
   };
 
   return (

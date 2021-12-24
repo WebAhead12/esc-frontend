@@ -2,6 +2,8 @@ import style from "./style.module.css";
 import useFetch from "../../fetch";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import dotenv from "dotenv";
+dotenv.config();
 
 function SelectedTeam(props) {
   const goTo = useNavigate();
@@ -15,14 +17,16 @@ function SelectedTeam(props) {
     error,
     isPending,
     data: data,
-  } = useFetch(`http://localhost:4000/Selectedteams/${props.teamName}`);
+  } = useFetch(
+    `${process.env.REACT_APP_API_URL}/Selectedteams/${props.teamName}`
+  );
 
   useEffect(() => {
     if (!data) return;
 
     const team = data ? data[0] : null;
 
-    fetch(`http://localhost:4000/checkRequests`, {
+    fetch(`${process.env.REACT_APP_API_URL}/checkRequests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +55,7 @@ function SelectedTeam(props) {
 
   function addResume(teamid) {
     if (answer) {
-      fetch(`http://localhost:4000/addRequests`, {
+      fetch(`${process.env.REACT_APP_API_URL}/addRequests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
