@@ -1,8 +1,7 @@
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import useFetch from "../../fetch";
-import dotenv from "dotenv";
-dotenv.config();
+const api = "https://escbackend.herokuapp.com";
 
 export default function Invites(props) {
   const [status, setStatus] = useState("pending");

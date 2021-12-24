@@ -1,8 +1,7 @@
 import style from "./style.module.css";
 import { useNavigate } from "react-router";
 import useFetch from "../../fetch";
-import dotenv from "dotenv";
-dotenv.config();
+const api = "https://escbackend.herokuapp.com";
 
 export default function Players(props) {
   const { error, isPending, data: players } = useFetch(`${api}/players`);
