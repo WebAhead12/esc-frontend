@@ -1,41 +1,40 @@
-import React from "react";
 import style from "./style.module.css";
+import { useNavigate } from "react-router";
+import useFetch from "../../fetch";
+const api = "https://escbackend.herokuapp.com";
 
 export default function Players(props) {
-  let playersArr = {
-    player1: {
-      username: "Karyum",
-      imagelink:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Cloud9_logo.svg/1200px-Cloud9_logo.svg.png",
-      description:
-        "We are the best north american player in League of legends and in Rocket league",
-      game: "League Of Legends",
-    },
-    player2: {
-      username: "George",
-      imagelink: "https://avatars.githubusercontent.com/u/24195641?v=4",
-      description:
-        "We are the better Org by far in North america and even in the whole world",
-      game: "Rocket League",
-    },
-  };
+  const { error, isPending, data: players } = useFetch(`${api}/players`);
+  const goTo = useNavigate();
+  props.setShowNavbar(true);
 
   return (
     <main>
-      <div className={style.title}>players</div>
+      <div className={style.title}>Players</div>
       <div className={style.players}>
-        {Object.keys(playersArr).map((key) => {
-          let player = playersArr[key];
-          return (
-            <div className={style.player}>
-              <div className={style.text}>
-                <h3>{player.username}</h3>
-                <p className={style.description}>{player.description}</p>
+        {error && <div>{error}</div>}
+        {isPending && <div>Loading...</div>}
+        {players &&
+          players.map((player) => (
+            <div
+              className={style.player}
+              key={player.id}
+              onClick={() => {
+                props.setUsername(player.username);
+                goTo("/SelectedPlayer");
+              }}
+            >
+              <div className="playerPreview">
+                <div className={style.text}>
+                  <h3>{player.username}</h3>
+                  <p className={style.description}>{player.description}</p>
+                  <p className={style.gender}>Gender:{player.gender}</p>
+                  <p className={style.location}>Location:{player.location}</p>
+                </div>
+                <img className={style.playerimg} src={player.imagelink} />
               </div>
-              <img className={style.playerimg} src={player.imagelink} />
             </div>
-          );
-        })}
+          ))}
       </div>
     </main>
   );

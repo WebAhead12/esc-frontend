@@ -2,9 +2,21 @@ import style from "./style.module.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import utils from "../../utils/loginAuth.js";
+const api = "https://escbackend.herokuapp.com";
 
 const Login = (props) => {
   //set navbar to hidden on this page
+  const goTo = useNavigate();
+  useEffect(() => {
+    if (utils.checkLogin()) {
+      if (pot) {
+        goTo("/teams");
+      } else {
+        goTo("/players");
+      }
+    }
+  });
   const { setShowNavbar } = props;
   setShowNavbar(false);
   const [userData, setUserData] = useState({
@@ -17,59 +29,59 @@ const Login = (props) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const history = useNavigate();
   const [pot, setPot] = useState(true);
-  const onChange =
-    (stateKey) =>
-    ({ target }) =>
-      setUserData({ ...userData, [stateKey]: target.value });
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     setLoading(true);
     if (pot == true) {
       axios
-        .post("http://localhost:4000/loginP", userData)
+        .post(`${api}/loginP`, userData)
         .then((res) => {
           setLoading(false);
-
-          if (!res.data.success) {
-            setError(res.data.message);
+          console.log(res);
+          if (res.status != 200) {
+            setError(res.data.status);
           } else {
-            localStorage.setItem("token", res.data.token);
-            history("/");
+            console.log(res.data);
+            localStorage.setItem("access_token", res.data.access_token);
+            localStorage.setItem("pot", "true");
+            goTo("/");
           }
         })
         .catch((err) => {
-          setError(err.message);
+          setError(err.response.data.status);
           setLoading(false);
         });
     } else {
       axios
-        .post("http://localhost:4000/loginT", teamData)
+        .post(`${api}/loginT`, teamData)
         .then((res) => {
           setLoading(false);
 
           if (!res.data.success) {
             setError(res.data.message);
           } else {
-            localStorage.setItem("token", res.data.token);
-            history("/");
+            window.localStorage.setItem("access_token", res.data.access_token);
+            localStorage.setItem("pot", "false");
+
+            goTo("/");
           }
         })
         .catch((err) => {
-          setError(err.message);
+          setError(err.response.data.status);
           setLoading(false);
         });
     }
   };
 
   useEffect(() => {
-    console.log(pot);
-  }, [pot]);
+    console.log(teamData);
+  }, [teamData]);
 
   if (loading) {
     return (
-      <div class="container">
+      <div className="container">
         <h1>Loading...</h1>
       </div>
     );
@@ -102,7 +114,12 @@ const Login = (props) => {
               type="text"
               className={style.usernameInput}
               placeholder="Username"
-              onChange={(e) => setUserData([e.target.value, userData[1]])}
+              onChange={(e) =>
+                setUserData({
+                  username: e.target.value,
+                  password: userData.password,
+                })
+              }
               required
             ></input>
           ) : (
@@ -110,18 +127,27 @@ const Login = (props) => {
               type="text"
               className={style.usernameInput}
               placeholder="Team-name"
-              onChange={(e) => setTeamData([e.target.value, teamData[1]])}
+              onChange={(e) => {
+                console.log(e.target.value);
+                setTeamData({
+                  teamname: e.target.value,
+                  password: teamData.password,
+                });
+              }}
               required
             ></input>
           )}
-
-          <br />
           {pot ? (
             <input
               type="password"
               className={style.passwordInput}
               placeholder="Password"
-              onChange={(e) => setUserData([userData[0], e.target.value])}
+              onChange={(e) =>
+                setUserData({
+                  username: userData.username,
+                  password: e.target.value,
+                })
+              }
               required
             ></input>
           ) : (
@@ -129,19 +155,20 @@ const Login = (props) => {
               type="password"
               className={style.passwordInput}
               placeholder="Password"
-              onChange={(e) => setTeamData([teamData[0], e.target.value])}
+              onChange={(e) =>
+                setTeamData({
+                  teamname: teamData.teamname,
+                  password: e.target.value,
+                })
+              }
               required
             ></input>
           )}
-
-          <br />
-          <button
-            className={style.loginButton}
-            type="log-in"
-            onClick={onSubmit}
-          >
-            Login
+          <button className={style.loginButton} onClick={onSubmit}>
+            {" "}
+            Log-in
           </button>
+          <br />
           {error && <span class="error">{error}</span>}
           <br />
           <a href="/register" className={style.text}>

@@ -1,11 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Quicksand&display=swap");
 
-.teamDiv {
+.playerDiv {
   font-family: "Orbitron", sans-serif;
   display: flex;
   font-size: 25px;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
   height: 50%;
   width: 60%;
@@ -22,6 +21,10 @@
 .img {
   height: 50%;
   max-width: 50%;
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+  left: 100px;
 }
 .requirements {
   list-style-type: none;
@@ -41,7 +44,7 @@
   border: 0px;
   cursor: pointer;
 }
-.sendResumeButton {
+.sendRequestButton {
   margin-top: 10px;
   width: 60%;
   height: 3vh;
