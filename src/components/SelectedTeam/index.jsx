@@ -33,7 +33,6 @@ function SelectedTeam(props) {
       body: JSON.stringify({ teamid: team.id }),
     })
       .then((res) => {
-        console.log(res, "res");
         if (!res.ok) {
           const error = new Error("HTTP error");
           error.status = res.status;
@@ -43,7 +42,6 @@ function SelectedTeam(props) {
         }
       })
       .then((check) => {
-        console.log("check", check);
         if (!check.length) {
           setAnswer(true);
           Settosay("Send Resume");
@@ -61,7 +59,6 @@ function SelectedTeam(props) {
         },
         body: JSON.stringify({ teamid: teamid }),
       }).then((res) => {
-        console.log(res, "res");
         if (!res.ok) {
           const error = new Error("HTTP error");
           error.status = res.status;
@@ -73,7 +70,6 @@ function SelectedTeam(props) {
     }
   }
   const team = data ? data[0] : null;
-  console.log("stats", team);
   return (
     <div>
       {error && <div>{error}</div>}

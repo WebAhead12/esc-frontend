@@ -22,7 +22,6 @@ export default function SentResumes(props) {
       },
       body: JSON.stringify({ playerid: playerid, status: status }),
     }).then((res) => {
-      console.log(res, "res");
       if (!res.ok) {
         const error = new Error("HTTP error");
         error.status = res.status;
@@ -32,8 +31,6 @@ export default function SentResumes(props) {
       }
     });
   }
-
-  console.log(resumes);
 
   return (
     <main>
