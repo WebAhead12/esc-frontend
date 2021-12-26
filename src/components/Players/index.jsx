@@ -5,10 +5,6 @@ const api = "https://escbackend.herokuapp.com";
 
 export default function Players(props) {
   const { error, isPending, data: players } = useFetch(`${api}/players`);
-<<<<<<< HEAD
-=======
-  console.log(players);
->>>>>>> 98f608b21c9e7b3419cc6163dbb420af140cff8c
   const goTo = useNavigate();
   props.setShowNavbar(true);
 
