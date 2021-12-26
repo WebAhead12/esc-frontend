@@ -3,8 +3,8 @@ import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-const api = "http://localhost:4000";
-
+import { objectExpression } from "@babel/types";
+const api = "https://escbackend.herokuapp.com";
 function Profile(props) {
   const goTo = useNavigate();
 
@@ -39,7 +39,6 @@ function Profile(props) {
           },
         };
         axios.get(`${api}/playerProfile`, config).then((data) => {
-          console.log(data.data[0]);
           setPlayer(data.data[0]);
         });
       } else if (pot === "false") {
@@ -50,7 +49,6 @@ function Profile(props) {
           },
         };
         axios.get(`${api}/teamProfile`, config).then((data) => {
-          console.log(data.data[0]);
           setTeam(data.data[0]);
         });
       }
@@ -60,6 +58,9 @@ function Profile(props) {
   React.useEffect(() => {
     setPot(localStorage.getItem("pot"));
   }, []);
+  React.useEffect(() => {
+    console.log(player);
+  }, [player]);
 
   return (
     <div>
@@ -119,7 +120,11 @@ function Profile(props) {
                         })}
                       </ul>
                       <br />
-                      {/* Registration Data :{team.registerdate.replace(team.registerdate.match(/T.+/g), "")} */}
+                      Registration Data :
+                      {team.registerdate.replace(
+                        team.registerdate.match(/T.+/g),
+                        ""
+                      )}
                     </p>
                     <div className={style.image}>
                       <img
@@ -130,11 +135,34 @@ function Profile(props) {
                     </div>
                   </div>
                 )}
-                {/* {pot === "true" ? (
-
-                                ): (
-
-                                    )} */}
+                {pot === "true" ? (
+                  <div>
+                    <h3> Stats </h3>
+                    <ul className={style.stats}>
+                      {Object.keys(player.stats).map((key) => {
+                        console.log(player.stats[key]);
+                        if (player.stats[key] !== null) {
+                          let temp = Object.keys(player.stats[key]).map(
+                            (stat) => {
+                              return (
+                                <li>
+                                  {stat}: {player.stats[key][stat]}
+                                </li>
+                              );
+                            }
+                          );
+                          return (
+                            <li>
+                              {key}:<ul>{temp}</ul>
+                            </li>
+                          );
+                        } else {
+                          return null;
+                        }
+                      })}
+                    </ul>{" "}
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>

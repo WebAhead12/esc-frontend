@@ -31,7 +31,6 @@ function SelectedPlayer(props) {
       body: JSON.stringify({ playerid: player.id }),
     })
       .then((res) => {
-        console.log(res, "res");
         if (!res.ok) {
           const error = new Error("HTTP error");
           error.status = res.status;
@@ -41,7 +40,6 @@ function SelectedPlayer(props) {
         }
       })
       .then((check) => {
-        console.log("check", check);
         if (!check.length) {
           setAnswer(true);
           Settosay("Send Request");
@@ -59,7 +57,6 @@ function SelectedPlayer(props) {
         },
         body: JSON.stringify({ playerid: playerid }),
       }).then((res) => {
-        console.log(res, "res");
         if (!res.ok) {
           const error = new Error("HTTP error");
           error.status = res.status;
@@ -71,7 +68,6 @@ function SelectedPlayer(props) {
     }
   }
   const player = data ? data[0] : null;
-  console.log("stats", player);
 
   return (
     <div>
