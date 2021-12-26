@@ -58,9 +58,6 @@ function Profile(props) {
   React.useEffect(() => {
     setPot(localStorage.getItem("pot"));
   }, []);
-  React.useEffect(() => {
-    console.log(player);
-  }, [player]);
 
   return (
     <div>
@@ -140,7 +137,6 @@ function Profile(props) {
                     <h3> Stats </h3>
                     <ul className={style.stats}>
                       {Object.keys(player.stats).map((key) => {
-                        console.log(player.stats[key]);
                         if (player.stats[key] !== null) {
                           let temp = Object.keys(player.stats[key]).map(
                             (stat) => {
