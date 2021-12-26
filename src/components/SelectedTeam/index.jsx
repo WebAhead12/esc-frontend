@@ -83,7 +83,13 @@ function SelectedTeam(props) {
           <div className={style.upper}>
             <div className={style.textDiv}>
               <h1 className={style.Name}> {team.teamname}</h1>
+<<<<<<< HEAD
               <p className={style.description}></p>
+=======
+              <p className={style.description}>
+                {/* About {team.teamname}:{team.description} */}
+              </p>
+>>>>>>> 98f608b21c9e7b3419cc6163dbb420af140cff8c
               <h3>Requirement:</h3>
               {/* <ul className={style.requirements}>
                 {Object.keys(team.requirements).map((key) => {
