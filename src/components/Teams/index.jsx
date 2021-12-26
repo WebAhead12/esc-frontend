@@ -1,12 +1,13 @@
 import style from "./style.module.css";
 import { useNavigate } from "react-router";
 import useFetch from "../../fetch";
-const api = "http://localhost:4000";
 
 export default function Teams(props) {
   const goTo = useNavigate();
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
   const { error, isPending, data: teams } = useFetch(`${api}/teams`);
-
   const { setShowNavbar } = props;
   setShowNavbar(true);
 
@@ -26,7 +27,7 @@ export default function Teams(props) {
                 goTo("/Selectedteam");
               }}
             >
-              <div className="teamPreview">
+              <div className={style.teamPreview}>
                 <div className={style.text}>
                   <h3>{team.teamname}</h3>
                   <p className={style.description}>{team.description}</p>

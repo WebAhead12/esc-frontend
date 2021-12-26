@@ -4,16 +4,19 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { objectExpression } from "@babel/types";
-const api = "https://escbackend.herokuapp.com";
+// const api = "https://escbackend.herokuapp.com";
+
 function Profile(props) {
   const goTo = useNavigate();
 
-  const token = window.localStorage.getItem("access_token");
   const { setShowNavbar } = props;
   const [answer, setAnswer] = useState(false);
   const [pot, setPot] = useState(null);
   const [player, setPlayer] = useState(null);
   const [team, setTeam] = useState(null);
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
   setShowNavbar(true);
 
   const games = {
@@ -56,6 +59,10 @@ function Profile(props) {
   }, [pot]);
 
   React.useEffect(() => {
+    console.log(player);
+  }, player);
+
+  React.useEffect(() => {
     setPot(localStorage.getItem("pot"));
   }, []);
 
@@ -77,7 +84,8 @@ function Profile(props) {
                       <br />
                       Location:{player.location}
                       <br />
-                      languages:{player.languages}
+                      languages:
+                      {player.languages.replaceAll(/{|}|"/g, "")}
                       <br />
                       Date:{player.age}
                       <br />
@@ -117,7 +125,7 @@ function Profile(props) {
                         })}
                       </ul>
                       <br />
-                      Registration Data :
+                      Registration Date :
                       {team.registerdate.replace(
                         team.registerdate.match(/T.+/g),
                         ""

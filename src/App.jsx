@@ -37,14 +37,22 @@ function App() {
   const [teamName, setTeamName] = React.useState(null);
   const [username, setUsername] = React.useState(null);
   const [pot, setPot] = React.useState(true);
+  const [production, setProduction] = React.useState(false);
   return (
     <>
       {showNavbar ? <Navbar pot={pot} /> : null}
       <Routes>
-        <Route path="/" element={<Login setShowNavbar={setShowNavbar} />} />
+        <Route
+          path="/"
+          element={
+            <Login setShowNavbar={setShowNavbar} production={production} />
+          }
+        />
         <Route
           path="register"
-          element={<Register setShowNavbar={setShowNavbar} />}
+          element={
+            <Register setShowNavbar={setShowNavbar} production={production} />
+          }
         />
         <Route
           path="SelectedTeam"
@@ -54,6 +62,7 @@ function App() {
                 <SelectedTeam
                   setShowNavbar={setShowNavbar}
                   teamName={teamName}
+                  production={production}
                 />
               </CheckPlayer>
             </RequireAuth>
@@ -66,6 +75,7 @@ function App() {
               <SelectedPlayer
                 setShowNavbar={setShowNavbar}
                 username={username}
+                production={production}
               />
             </RequireAuth>
           }
@@ -78,6 +88,7 @@ function App() {
                 setShowNavbar={setShowNavbar}
                 username={username}
                 setUsername={setUsername}
+                production={production}
               />
             </RequireAuth>
           }
@@ -87,7 +98,7 @@ function App() {
           path="invites"
           element={
             <RequireAuth>
-              <Invites setShowNavbar={setShowNavbar} />
+              <Invites setShowNavbar={setShowNavbar} production={production} />
             </RequireAuth>
           }
         />
@@ -95,7 +106,10 @@ function App() {
           path="requests"
           element={
             <RequireAuth>
-              <SentResumes setShowNavbar={setShowNavbar} />
+              <SentResumes
+                setShowNavbar={setShowNavbar}
+                production={production}
+              />
             </RequireAuth>
           }
         />
@@ -107,6 +121,7 @@ function App() {
                 setShowNavbar={setShowNavbar}
                 teamName={teamName}
                 setTeamName={setTeamName}
+                production={production}
               />
             </RequireAuth>
           }
@@ -115,29 +130,29 @@ function App() {
           path="games"
           element={
             <RequireAuth>
-              <Games setShowNavbar={setShowNavbar}></Games>
+              <Games
+                setShowNavbar={setShowNavbar}
+                production={production}
+              ></Games>
             </RequireAuth>
-          }
-        />
-        <Route
-          path="test"
-          element={
-            <HorizontalLinearStepper
-              setShowNavbar={setShowNavbar}
-            ></HorizontalLinearStepper>
           }
         />
         <Route
           path="profile"
           element={
             <RequireAuth>
-              <Profile setShowNavbar={setShowNavbar} />
+              <Profile setShowNavbar={setShowNavbar} production={production} />
             </RequireAuth>
           }
         />
         <Route
           path="*"
-          element={<Login setShowNavbar={setShowNavbar}></Login>}
+          element={
+            <Login
+              setShowNavbar={setShowNavbar}
+              production={production}
+            ></Login>
+          }
         />
       </Routes>
     </>

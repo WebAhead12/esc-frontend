@@ -1,13 +1,15 @@
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import useFetch from "../../fetch";
-const api = "http://localhost:4000";
 
 export default function Invites(props) {
   const [status, setStatus] = useState("pending");
   const [answer, setAnswer] = useState(true);
   const token = window.localStorage.getItem("access_token");
   const { setShowNavbar } = props;
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
   setShowNavbar(true);
 
   const { error, isPending, data: invites } = useFetch(`${api}/invites`);

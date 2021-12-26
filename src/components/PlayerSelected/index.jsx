@@ -2,10 +2,11 @@ import style from "./style.module.css";
 import useFetch from "../../fetch";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-const api = "http://localhost:4000";
 function SelectedPlayer(props) {
   const goTo = useNavigate();
-
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
   const token = window.localStorage.getItem("access_token");
   const { setShowNavbar } = props;
   const [answer, setAnswer] = useState(false);

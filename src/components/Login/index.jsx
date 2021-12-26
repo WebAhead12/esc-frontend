@@ -2,10 +2,15 @@ import style from "./style.module.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import utils from "../../utils/loginAuth.js";
-const api = "https://escbackend.herokuapp.com";
+// const api = "https://escbackend.herokuapp.com";
 
 const Login = (props) => {
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
   //set navbar to hidden on this page
   const goTo = useNavigate();
   useEffect(() => {
@@ -38,15 +43,18 @@ const Login = (props) => {
       axios
         .post(`${api}/loginP`, userData)
         .then((res) => {
+          console.log(res);
           setLoading(false);
-          if (res.status != 200) {
-            setError(res.data.status);
+          if (res.data.success) {
             localStorage.setItem("access_token", res.data.access_token);
             localStorage.setItem("pot", "true");
             goTo("/");
+          } else {
+            setError(res.status);
           }
         })
         .catch((err) => {
+          console.log(err);
           setError(err.response.data.status);
           setLoading(false);
         });
@@ -89,22 +97,32 @@ const Login = (props) => {
             className={style.logoImg}
           />
           <br />
-          <button
-            onClick={(e) => {
-              setPot(true);
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-around",
+              width: "20vw",
             }}
           >
-            {" "}
-            Player
-          </button>
-          <button
-            onClick={(e) => {
-              setPot(false);
-            }}
-          >
-            {" "}
-            Team{" "}
-          </button>
+            <button
+              className={pot ? style.playerOn : style.playerOff}
+              sx={{ width: "50%" }}
+              onClick={(e) => {
+                setPot(true);
+              }}
+            >
+              Player
+            </button>
+            <button
+              className={pot ? style.teamOff : style.teamOn}
+              sx={{ width: "50%" }}
+              onClick={(e) => {
+                setPot(false);
+              }}
+            >
+              Team
+            </button>
+          </Box>
           {pot ? (
             <input
               type="text"
@@ -122,7 +140,7 @@ const Login = (props) => {
             <input
               type="text"
               className={style.usernameInput}
-              placeholder="Team-name"
+              placeholder="Teamname"
               onChange={(e) => {
                 setTeamData({
                   teamname: e.target.value,
@@ -160,11 +178,10 @@ const Login = (props) => {
             ></input>
           )}
           <button className={style.loginButton} onClick={onSubmit}>
-            {" "}
             Log-in
           </button>
           <br />
-          {error && <span class="error">{error}</span>}
+          <span className={style.error}>{error}</span>
           <br />
           <a href="/register" className={style.text}>
             Dont have an account, sign up?

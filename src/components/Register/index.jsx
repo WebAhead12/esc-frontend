@@ -15,8 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
 const steps = ["Add account info", "Add stats"];
 
-const api = "http://localhost:4000";
-
 function validateEmail(emailAdress) {
   let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (emailAdress.match(regexEmail)) {
@@ -28,6 +26,9 @@ function validateEmail(emailAdress) {
 
 export default function Register(props) {
   const [activeStep, setActiveStep] = React.useState(0);
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
 
   const goTo = useNavigate();
   useEffect(() => {

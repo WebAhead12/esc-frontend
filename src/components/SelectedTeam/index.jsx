@@ -3,8 +3,6 @@ import useFetch from "../../fetch";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-const api = "http://localhost:4000";
-
 function SelectedTeam(props) {
   const goTo = useNavigate();
 
@@ -12,12 +10,20 @@ function SelectedTeam(props) {
   const { setShowNavbar } = props;
   const [answer, setAnswer] = useState(false);
   const [tosay, Settosay] = useState("Resume Sent");
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
   setShowNavbar(true);
   const {
     error,
     isPending,
     data: data,
   } = useFetch(`${api}/Selectedteams/${props.teamName}`);
+
+  const reqs = {
+    role: "Role",
+    rank: "Rank",
+  };
 
   useEffect(() => {
     if (!data) return;
@@ -80,14 +86,15 @@ function SelectedTeam(props) {
             <div className={style.textDiv}>
               <h1 className={style.Name}> {team.teamname}</h1>
               <p className={style.description}>
-                {/* About {team.teamname}:{team.description} */}
+                About {team.teamname}:<br />
+                {team.description}
               </p>
               <h3>Requirement:</h3>
-              {/* <ul className={style.requirements}>
+              <ul className={style.requirements}>
                 {Object.keys(team.requirements).map((key) => {
-                  return <li>{`${key}: ${team.requirements[key]}`}</li>;
+                  return <li>{`${reqs[key]}: ${team.requirements[key]}`}</li>;
                 })}
-              </ul> */}
+              </ul>
             </div>
 
             <img src={team.imagelink} alt="logo" className={style.img} />
