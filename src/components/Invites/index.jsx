@@ -21,7 +21,6 @@ export default function Invites(props) {
       },
       body: JSON.stringify({ teamid: teamid, status: status }),
     }).then((res) => {
-      console.log(res, "res");
       if (!res.ok) {
         const error = new Error("HTTP error");
         error.status = res.status;
@@ -31,8 +30,6 @@ export default function Invites(props) {
       }
     });
   }
-
-  console.log(invites);
 
   return (
     <main>

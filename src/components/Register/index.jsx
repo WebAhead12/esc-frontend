@@ -12,6 +12,7 @@ import { languagesOptions } from "../../utils/languages.js";
 import { gamesOptions } from "../../utils/games.js";
 import style from "./style.module.css";
 import { useNavigate } from "react-router-dom";
+import { TextField } from "@mui/material";
 const steps = ["Add account info", "Add stats"];
 
 const api = "http://localhost:4000";
@@ -106,7 +107,6 @@ export default function Register(props) {
       description: description,
       requirements: requirements,
     };
-    console.log(data);
     fetch(`${api}/registerT`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -141,7 +141,6 @@ export default function Register(props) {
       languages: languagesArr,
       stats: stats,
     };
-
     fetch(`${api}/registerP`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -151,7 +150,6 @@ export default function Register(props) {
         return response.json();
       })
       .then((data) => {
-        console.log("response", data);
         if (data.status == "success") {
           goTo("/");
         } else {
@@ -237,7 +235,7 @@ export default function Register(props) {
         {activeStep === 0 ? (
           pot ? (
             <Box>
-              <div className={style.register}>
+              <Box className={style.register}>
                 <Box
                   sx={{
                     margin: "auto",
@@ -281,56 +279,105 @@ export default function Register(props) {
                     Team
                   </Button>
                 </Box>
-                <Box>
-                  <Box></Box>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    placeholder="Confirm password"
-                    value={confirm}
-                    onChange={(e) => setConfirm(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    id="fname"
-                    name="fname"
-                    placeholder="First name"
-                    value={firstname}
-                    onChange={(e) => setfName(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    id="lname"
-                    name="lname"
-                    placeholder="Last name"
-                    value={lastname}
-                    onChange={(e) => setlName(e.target.value)}
-                  />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      marginRight: "20px",
+                      width: "50%",
+                      padding: "10px",
+                    }}
+                  >
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="text"
+                      id="username"
+                      name="username"
+                      placeholder="Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder="Confirm password"
+                      value={confirm}
+                      onChange={(e) => setConfirm(e.target.value)}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "50%",
+                      padding: "10px",
+                    }}
+                  >
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="text"
+                      id="fname"
+                      name="fname"
+                      placeholder="First name"
+                      value={firstname}
+                      onChange={(e) => setfName(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="text"
+                      id="lname"
+                      name="lname"
+                      placeholder="Last name"
+                      value={lastname}
+                      onChange={(e) => setlName(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="text"
+                      id="imglink"
+                      name="imglink"
+                      placeholder="Profile picture"
+                      value={imagelink}
+                      onChange={(e) => setImgLink(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="date"
+                      id="date"
+                      name="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                  </Box>
+                </Box>
+                <Box sx={{ padding: "10px" }}>
                   <Select
                     className={style.gender}
                     isSearchable={true}
@@ -350,24 +397,11 @@ export default function Register(props) {
                       setLanguages(e);
                     }}
                   />
-                  <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    id="imglink"
-                    name="imglink"
-                    placeholder="Profile picture"
-                    value={imagelink}
-                    onChange={(e) => setImgLink(e.target.value)}
-                  />
                 </Box>
-                <a href="/">Already have an account?</a>
-              </div>
+                <a href="/" style={{ display: "block", textAlign: "center" }}>
+                  Already have an account?
+                </a>
+              </Box>
             </Box>
           ) : (
             <div>
@@ -415,80 +449,115 @@ export default function Register(props) {
                     Team
                   </Button>
                 </Box>
-                <form>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    id="teamname"
-                    name="teamname"
-                    placeholder="Team name"
-                    value={teamname}
-                    onChange={(e) => setTeamname(e.target.value)}
-                  />
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    placeholder="Confirm password"
-                    value={confirm}
-                    onChange={(e) => setConfirm(e.target.value)}
-                  />
-                  <Select
-                    className={style.gender}
-                    isSearchable={true}
-                    name="game"
-                    options={gamesOptions}
-                    value={game}
-                    onChange={(e) => setGame(e)}
-                  />
-                  <input
-                    type="text"
-                    id="description"
-                    name="description"
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    id="imglink"
-                    name="imglink"
-                    placeholder="Team picture"
-                    value={imagelink}
-                    onChange={(e) => setImgLink(e.target.value)}
-                  />
-                </form>
-                <a href="/">Already have an account?</a>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "50%",
+                      padding: "10px",
+                    }}
+                  >
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="text"
+                      id="username"
+                      name="username"
+                      placeholder="Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="text"
+                      id="teamname"
+                      name="teamname"
+                      placeholder="Team name"
+                      value={teamname}
+                      onChange={(e) => setTeamname(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "50%",
+                      padding: "10px",
+                    }}
+                  >
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder="Confirm password"
+                      value={confirm}
+                      onChange={(e) => setConfirm(e.target.value)}
+                    />
+                    <Input
+                      sx={{ marginTop: "15px" }}
+                      type="text"
+                      id="imglink"
+                      name="imglink"
+                      placeholder="Team picture"
+                      value={imagelink}
+                      onChange={(e) => setImgLink(e.target.value)}
+                    />
+                    <TextField
+                      multiline
+                      sx={{ marginTop: "15px" }}
+                      rows={2}
+                      type="text"
+                      id="description"
+                      name="description"
+                      placeholder="Description"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </Box>
+                </Box>
+                <Select
+                  className={style.gender}
+                  isSearchable={true}
+                  name="game"
+                  options={gamesOptions}
+                  value={game}
+                  onChange={(e) => setGame(e)}
+                />
+                <a href="/" style={{ display: "block", textAlign: "center" }}>
+                  Already have an account?
+                </a>
               </div>
             </div>
           )
         ) : pot ? (
           <Box>
             <Select
-              className={style.gender}
+              className={style.game}
               isSearchable={true}
               name="game"
               options={gamesOptions}
@@ -512,6 +581,7 @@ export default function Register(props) {
                   >
                     <Typography>{selectedGame.label}</Typography>
                     <Input
+                      sx={{ marginTop: "15px" }}
                       placeholder="IGN"
                       value={ign}
                       onChange={(e) => {
@@ -519,6 +589,7 @@ export default function Register(props) {
                       }}
                     />
                     <Input
+                      sx={{ marginTop: "15px" }}
                       placeholder="Rank"
                       value={rank}
                       onChange={(e) => {
@@ -526,6 +597,7 @@ export default function Register(props) {
                       }}
                     />
                     <Input
+                      sx={{ marginTop: "15px" }}
                       placeholder="Role"
                       value={role}
                       onChange={(e) => {
@@ -533,6 +605,7 @@ export default function Register(props) {
                       }}
                     />
                     <Input
+                      sx={{ marginTop: "15px" }}
                       placeholder="OP.GG link"
                       value={opgg}
                       onChange={(e) => {
@@ -604,6 +677,7 @@ export default function Register(props) {
                   {game.label} Requirements
                 </Typography>
                 <Input
+                  sx={{ marginTop: "15px" }}
                   placeholder="Rank"
                   value={requirements.rank}
                   onChange={(e) => {
@@ -614,6 +688,7 @@ export default function Register(props) {
                   }}
                 />
                 <Input
+                  sx={{ marginTop: "15px" }}
                   placeholder="Role"
                   value={requirements.role}
                   onChange={(e) => {
@@ -646,8 +721,12 @@ export default function Register(props) {
           <Button onClick={handleNext}>
             {activeStep === steps.length - 1 ? "Finish" : "Next"}
           </Button>
-          <span>{error}</span>
         </Box>
+        <Typography
+          sx={{ color: "#e5002a", display: "block", textAlign: "center" }}
+        >
+          {error}
+        </Typography>
       </React.Fragment>
     </Box>
   );

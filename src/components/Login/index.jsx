@@ -39,11 +39,8 @@ const Login = (props) => {
         .post(`${api}/loginP`, userData)
         .then((res) => {
           setLoading(false);
-          console.log(res);
           if (res.status != 200) {
             setError(res.data.status);
-          } else {
-            console.log(res.data);
             localStorage.setItem("access_token", res.data.access_token);
             localStorage.setItem("pot", "true");
             goTo("/");
@@ -74,11 +71,6 @@ const Login = (props) => {
         });
     }
   };
-
-  useEffect(() => {
-    console.log(teamData);
-  }, [teamData]);
-
   if (loading) {
     return (
       <div className="container">
@@ -132,7 +124,6 @@ const Login = (props) => {
               className={style.usernameInput}
               placeholder="Team-name"
               onChange={(e) => {
-                console.log(e.target.value);
                 setTeamData({
                   teamname: e.target.value,
                   password: teamData.password,
