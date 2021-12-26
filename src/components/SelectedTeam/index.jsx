@@ -3,7 +3,7 @@ import useFetch from "../../fetch";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-const api = "https://escbackend.herokuapp.com";
+const api = "http://localhost:4000";
 
 function SelectedTeam(props) {
   const goTo = useNavigate();

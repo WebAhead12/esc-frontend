@@ -1,7 +1,7 @@
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import useFetch from "../../fetch";
-const api = "https://escbackend.herokuapp.com";
+const api = "http://localhost:4000";
 
 export default function Invites(props) {
   const [status, setStatus] = useState("pending");

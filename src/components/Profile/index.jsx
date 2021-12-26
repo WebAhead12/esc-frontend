@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-const api = "https://escbackend.herokuapp.com";
+const api = "http://localhost:4000";
 
 function Profile(props) {
   const goTo = useNavigate();

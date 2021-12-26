@@ -1,14 +1,11 @@
 import style from "./style.module.css";
 import { useNavigate } from "react-router";
 import useFetch from "../../fetch";
+const api = "http://localhost:4000";
 
 export default function Teams(props) {
   const goTo = useNavigate();
-  const {
-    error,
-    isPending,
-    data: teams,
-  } = useFetch("http://localhost:4000/teams");
+  const { error, isPending, data: teams } = useFetch(`${api}/teams`);
 
   const { setShowNavbar } = props;
   setShowNavbar(true);

@@ -14,7 +14,7 @@ import style from "./style.module.css";
 import { useNavigate } from "react-router-dom";
 const steps = ["Add account info", "Add stats"];
 
-const api = "https://escbackend.herokuapp.com";
+const api = "http://localhost:4000";
 
 function validateEmail(emailAdress) {
   let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -221,7 +221,7 @@ export default function Register(props) {
   };
 
   return (
-    <Box sx={{ width: "75%", margin: "auto", marginTop: "2vh" }}>
+    <Box sx={{ width: "50vw", margin: "auto", marginTop: "2vh" }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -237,26 +237,52 @@ export default function Register(props) {
         {activeStep === 0 ? (
           pot ? (
             <Box>
-              <h1 className={style.title}>Register</h1>
               <div className={style.register}>
-                <img></img>
-                <button
-                  className={style.playerButton}
-                  onClick={(e) => {
-                    setPot(true);
+                <Box
+                  sx={{
+                    margin: "auto",
+                    display: "block",
+                  }}
+                  component="img"
+                  src="https://i.imgur.com/tOy4ViX.png"
+                />
+                <Typography
+                  sx={{
+                    fontFamily: "Orbitron, sans-serif",
+                    fontSize: "2rem",
+                    textAlign: "center",
                   }}
                 >
-                  Player
-                </button>
-                <button
-                  className={style.teamButton}
-                  onClick={(e) => {
-                    setPot(false);
+                  Register
+                </Typography>
+                <Box
+                  className={style.buttonContainer}
+                  sx={{
+                    display: "flex",
+                    margin: "auto",
+                    justifyContent: "space-around",
+                    padding: "15px",
                   }}
                 >
-                  Team
-                </button>
-                <form>
+                  <Button
+                    className={style.playerButton}
+                    onClick={(e) => {
+                      setPot(true);
+                    }}
+                  >
+                    Player
+                  </Button>
+                  <Button
+                    className={style.teamButton}
+                    onClick={(e) => {
+                      setPot(false);
+                    }}
+                  >
+                    Team
+                  </Button>
+                </Box>
+                <Box>
+                  <Box></Box>
                   <input
                     type="text"
                     id="username"
@@ -339,31 +365,56 @@ export default function Register(props) {
                     value={imagelink}
                     onChange={(e) => setImgLink(e.target.value)}
                   />
-                </form>
+                </Box>
                 <a href="/">Already have an account?</a>
               </div>
             </Box>
           ) : (
             <div>
-              <h1 className={style.title}>Register</h1>
               <div className={style.register}>
-                <img></img>
-                <button
-                  className={style.playerButton}
-                  onClick={(e) => {
-                    setPot(true);
+                <Box
+                  sx={{
+                    margin: "auto",
+                    display: "block",
+                  }}
+                  component="img"
+                  src="https://i.imgur.com/tOy4ViX.png"
+                />
+                <Typography
+                  sx={{
+                    fontFamily: "Orbitron, sans-serif",
+                    fontSize: "2rem",
+                    textAlign: "center",
                   }}
                 >
-                  Player
-                </button>
-                <button
-                  className={style.teamButton}
-                  onClick={(e) => {
-                    setPot(false);
+                  Register
+                </Typography>
+                <Box
+                  className={style.buttonContainer}
+                  sx={{
+                    display: "flex",
+                    margin: "auto",
+                    justifyContent: "space-around",
+                    padding: "15px",
                   }}
                 >
-                  Team
-                </button>
+                  <Button
+                    className={style.playerButton}
+                    onClick={(e) => {
+                      setPot(true);
+                    }}
+                  >
+                    Player
+                  </Button>
+                  <Button
+                    className={style.teamButton}
+                    onClick={(e) => {
+                      setPot(false);
+                    }}
+                  >
+                    Team
+                  </Button>
+                </Box>
                 <form>
                   <input
                     type="text"
@@ -499,6 +550,10 @@ export default function Register(props) {
                             opgg: opgg,
                           },
                         });
+                        setIgn("");
+                        setRank("");
+                        setRole("");
+                        setOpgg("");
                         setShowStats(false);
                       }}
                     >

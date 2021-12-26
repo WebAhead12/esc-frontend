@@ -91,7 +91,11 @@ const Login = (props) => {
     <div>
       <div className={style.center}>
         <div className={style.loginHolder}>
-          <img src="" alt="Logo-Esc" className={style.logoImg} />
+          <img
+            src="https://i.imgur.com/tOy4ViX.png"
+            alt="Logo-Esc"
+            className={style.logoImg}
+          />
           <br />
           <button
             onClick={(e) => {
