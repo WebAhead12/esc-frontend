@@ -21,7 +21,7 @@ const Login = (props) => {
         goTo("/players");
       }
     }
-  });
+  }, []);
   const { setShowNavbar } = props;
   setShowNavbar(false);
   const [userData, setUserData] = useState({

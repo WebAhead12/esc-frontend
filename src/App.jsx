@@ -18,6 +18,10 @@ const checkLogin = () => {
   return !!localStorage.getItem("access_token");
 };
 
+const getPot = () => {
+  if (checkPot) return localStorage.getItem("pot");
+};
+
 const checkPot = () => {
   return !!localStorage.getItem("pot");
 };
@@ -26,10 +30,20 @@ function RequireAuth({ children }) {
 }
 
 function CheckTeam({ children }) {
-  return checkPot() ? <Navigate to="/" /> : children;
+  if (checkPot()) {
+    if (!getPot()) {
+      return children;
+    }
+  }
+  return <Navigate to="/" />;
 }
 function CheckPlayer({ children }) {
-  return !checkPot() ? <Navigate to="/" /> : children;
+  if (checkPot()) {
+    if (getPot()) {
+      return children;
+    }
+  }
+  return <Navigate to="/" />;
 }
 
 function App() {
@@ -38,6 +52,7 @@ function App() {
   const [username, setUsername] = React.useState(null);
   const [pot, setPot] = React.useState(true);
   const [production, setProduction] = React.useState(false);
+  const [game, setGame] = React.useState("");
   return (
     <>
       {showNavbar ? <Navbar pot={pot} /> : null}
@@ -72,11 +87,13 @@ function App() {
           path="SelectedPlayer"
           element={
             <RequireAuth>
-              <SelectedPlayer
-                setShowNavbar={setShowNavbar}
-                username={username}
-                production={production}
-              />
+              <CheckTeam>
+                <SelectedPlayer
+                  setShowNavbar={setShowNavbar}
+                  username={username}
+                  production={production}
+                />
+              </CheckTeam>
             </RequireAuth>
           }
         />
@@ -84,12 +101,15 @@ function App() {
           path="players"
           element={
             <RequireAuth>
-              <Players
-                setShowNavbar={setShowNavbar}
-                username={username}
-                setUsername={setUsername}
-                production={production}
-              />
+              <CheckTeam>
+                <Players
+                  setShowNavbar={setShowNavbar}
+                  username={username}
+                  setUsername={setUsername}
+                  production={production}
+                  game={game}
+                />
+              </CheckTeam>
             </RequireAuth>
           }
         />
@@ -98,7 +118,12 @@ function App() {
           path="invites"
           element={
             <RequireAuth>
-              <Invites setShowNavbar={setShowNavbar} production={production} />
+              <CheckPlayer>
+                <Invites
+                  setShowNavbar={setShowNavbar}
+                  production={production}
+                />
+              </CheckPlayer>
             </RequireAuth>
           }
         />
@@ -106,10 +131,12 @@ function App() {
           path="requests"
           element={
             <RequireAuth>
-              <SentResumes
-                setShowNavbar={setShowNavbar}
-                production={production}
-              />
+              <CheckTeam>
+                <SentResumes
+                  setShowNavbar={setShowNavbar}
+                  production={production}
+                />
+              </CheckTeam>
             </RequireAuth>
           }
         />
@@ -117,12 +144,15 @@ function App() {
           path="teams"
           element={
             <RequireAuth>
-              <Teams
-                setShowNavbar={setShowNavbar}
-                teamName={teamName}
-                setTeamName={setTeamName}
-                production={production}
-              />
+              <CheckPlayer>
+                <Teams
+                  setShowNavbar={setShowNavbar}
+                  teamName={teamName}
+                  setTeamName={setTeamName}
+                  production={production}
+                  game={game}
+                />
+              </CheckPlayer>
             </RequireAuth>
           }
         />
@@ -133,6 +163,8 @@ function App() {
               <Games
                 setShowNavbar={setShowNavbar}
                 production={production}
+                setGame={setGame}
+                game={game}
               ></Games>
             </RequireAuth>
           }

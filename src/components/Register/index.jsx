@@ -13,6 +13,7 @@ import { gamesOptions } from "../../utils/games.js";
 import style from "./style.module.css";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
+import utils from "../../utils/loginAuth.js";
 const steps = ["Add account info", "Add stats"];
 
 function validateEmail(emailAdress) {
@@ -34,6 +35,13 @@ export default function Register(props) {
   useEffect(() => {
     const { setShowNavbar } = props;
     setShowNavbar(false);
+    if (utils.checkLogin()) {
+      if (pot) {
+        goTo("/teams");
+      } else {
+        goTo("/players");
+      }
+    }
   }, []);
 
   const genderOptions = [

@@ -87,9 +87,9 @@ function Profile(props) {
                       languages:
                       {player.languages.replaceAll(/{|}|"/g, "")}
                       <br />
-                      Date:{player.age}
+                      Date of birth:{player.age}
                       <br />
-                      Registration Data :
+                      Registration Date :
                       {player.registerdate.replace(
                         player.registerdate.match(/T.+/g),
                         ""
