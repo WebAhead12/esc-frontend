@@ -5,11 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 function Games(props) {
   const goTo = useNavigate();
-  const pot = window.localStorage.getItem("pot");
   var url = "";
   useEffect(() => {
     const pot = window.localStorage.getItem("pot");
-    console.log("p", pot);
+    //checks user if player or team
     if (pot == "true") {
       url = "/TeamByGame";
       console.log(url);

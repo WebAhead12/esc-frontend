@@ -13,6 +13,7 @@ function Navbar() {
   const [SideBarData, setSideBarData] = useState(null);
   const goTo = useNavigate();
   const showSidebar = () => setSidebar(!sidebar);
+  //checks if team or player to show which navbar
   useEffect(() => {
     const pot = window.localStorage.getItem("pot");
     if (pot == "false") {

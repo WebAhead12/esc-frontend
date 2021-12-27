@@ -15,6 +15,7 @@ const Login = (props) => {
   const goTo = useNavigate();
   useEffect(() => {
     if (utils.checkLogin()) {
+      //checks if there is already a token/user logged in
       goTo("/games");
     }
   }, []);

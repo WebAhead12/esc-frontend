@@ -53,7 +53,6 @@ function App() {
   const [showNavbar, setShowNavbar] = React.useState(true);
   const [teamName, setTeamName] = React.useState(null);
   const [username, setUsername] = React.useState(null);
-  const [pot, setPot] = React.useState(true);
   const [production, setProduction] = React.useState(false);
   const [game, setGame] = React.useState("");
   return (
@@ -183,19 +182,7 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route
-          path="games"
-          element={
-            <RequireAuth>
-              <Games
-                setShowNavbar={setShowNavbar}
-                production={production}
-                setGame={setGame}
-                game={game}
-              ></Games>
-            </RequireAuth>
-          }
-        />
+
         <Route
           path="profile"
           element={
