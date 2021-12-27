@@ -3,12 +3,10 @@ import { useNavigate } from "react-router";
 import useFetch from "../../fetch";
 
 export default function Players(props) {
-  const {
-    error,
-    isPending,
-    data: players,
-  } = useFetch("http://localhost:4000/players");
-  console.log(players);
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
+  const { error, isPending, data: players } = useFetch(`${api}/players`);
   const goTo = useNavigate();
   props.setShowNavbar(true);
 

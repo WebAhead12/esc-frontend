@@ -7,16 +7,15 @@ export default function SentResumes(props) {
   const [answer, setAnswer] = useState(true);
   const token = window.localStorage.getItem("access_token");
   const { setShowNavbar } = props;
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
   setShowNavbar(true);
 
-  const {
-    error,
-    isPending,
-    data: resumes,
-  } = useFetch("http://localhost:4000/requests");
+  const { error, isPending, data: resumes } = useFetch(`${api}/requests`);
 
   function updateResume(playerid, status) {
-    fetch(`http://localhost:4000/updateRequests`, {
+    fetch(`${api}/updateRequests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +23,6 @@ export default function SentResumes(props) {
       },
       body: JSON.stringify({ playerid: playerid, status: status }),
     }).then((res) => {
-      console.log(res, "res");
       if (!res.ok) {
         const error = new Error("HTTP error");
         error.status = res.status;
@@ -34,8 +32,6 @@ export default function SentResumes(props) {
       }
     });
   }
-
-  console.log(resumes);
 
   return (
     <main>

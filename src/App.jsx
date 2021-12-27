@@ -7,19 +7,22 @@ import Register from "./components/Register";
 import SentResumes from "./components/SentResumes";
 import Teams from "./components/Teams";
 import Invites from "./components/Invites";
-import Profile from "./components/Profile"
+import Profile from "./components/Profile";
 import Games from "./components/Games";
 import TeamsByGame from "./components/TeamsByGame";
 import PlayersByGame from "./components/PlayersByGame";
 
 import HorizontalLinearStepper from "./components/HorizontalLinearStepper.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
-
 import React from "react";
 import SelectedPlayer from "./components/PlayerSelected";
-
+require("dotenv").config();
 const checkLogin = () => {
   return !!localStorage.getItem("access_token");
+};
+
+const getPot = () => {
+  if (checkPot) return localStorage.getItem("pot");
 };
 
 const checkPot = () => {
@@ -30,29 +33,44 @@ function RequireAuth({ children }) {
 }
 
 function CheckTeam({ children }) {
-  return checkPot() ? <Navigate to="/" /> : children;
+  if (checkPot()) {
+    if (!getPot()) {
+      return children;
+    }
+  }
+  return <Navigate to="/" />;
 }
 function CheckPlayer({ children }) {
-  return !checkPot() ? <Navigate to="/" /> : children;
+  if (checkPot()) {
+    if (getPot()) {
+      return children;
+    }
+  }
+  return <Navigate to="/" />;
 }
 
 function App() {
   const [showNavbar, setShowNavbar] = React.useState(true);
   const [teamName, setTeamName] = React.useState(null);
   const [username, setUsername] = React.useState(null);
-  const [game, setGame] = React.useState(null);
+  const [pot, setPot] = React.useState(true);
+  const [production, setProduction] = React.useState(false);
+  const [game, setGame] = React.useState("");
   return (
     <>
       {showNavbar ? <Navbar /> : null}
       <Routes>
         <Route
           path="/"
-          exact
-          element={<Login setShowNavbar={setShowNavbar} />}
+          element={
+            <Login setShowNavbar={setShowNavbar} production={production} />
+          }
         />
         <Route
           path="register"
-          element={<Register setShowNavbar={setShowNavbar} />}
+          element={
+            <Register setShowNavbar={setShowNavbar} production={production} />
+          }
         />
         <Route
           path="SelectedTeam"
@@ -62,6 +80,7 @@ function App() {
                 <SelectedTeam
                   setShowNavbar={setShowNavbar}
                   teamName={teamName}
+                  production={production}
                 />
               </CheckPlayer>
             </RequireAuth>
@@ -71,10 +90,13 @@ function App() {
           path="SelectedPlayer"
           element={
             <RequireAuth>
-              <SelectedPlayer
-                setShowNavbar={setShowNavbar}
-                username={username}
-              />
+              <CheckTeam>
+                <SelectedPlayer
+                  setShowNavbar={setShowNavbar}
+                  username={username}
+                  production={production}
+                />
+              </CheckTeam>
             </RequireAuth>
           }
         />
@@ -106,11 +128,15 @@ function App() {
           path="players"
           element={
             <RequireAuth>
-              <Players
-                setShowNavbar={setShowNavbar}
-                username={username}
-                setUsername={setUsername}
-              />
+              <CheckTeam>
+                <Players
+                  setShowNavbar={setShowNavbar}
+                  username={username}
+                  setUsername={setUsername}
+                  production={production}
+                  game={game}
+                />
+              </CheckTeam>
             </RequireAuth>
           }
         />
@@ -119,7 +145,12 @@ function App() {
           path="invites"
           element={
             <RequireAuth>
-              <Invites setShowNavbar={setShowNavbar} />
+              <CheckPlayer>
+                <Invites
+                  setShowNavbar={setShowNavbar}
+                  production={production}
+                />
+              </CheckPlayer>
             </RequireAuth>
           }
         />
@@ -127,7 +158,12 @@ function App() {
           path="requests"
           element={
             <RequireAuth>
-              <SentResumes setShowNavbar={setShowNavbar} />
+              <CheckTeam>
+                <SentResumes
+                  setShowNavbar={setShowNavbar}
+                  production={production}
+                />
+              </CheckTeam>
             </RequireAuth>
           }
         />
@@ -135,11 +171,15 @@ function App() {
           path="teams"
           element={
             <RequireAuth>
-              <Teams
-                setShowNavbar={setShowNavbar}
-                teamName={teamName}
-                setTeamName={setTeamName}
-              />
+              <CheckPlayer>
+                <Teams
+                  setShowNavbar={setShowNavbar}
+                  teamName={teamName}
+                  setTeamName={setTeamName}
+                  production={production}
+                  game={game}
+                />
+              </CheckPlayer>
             </RequireAuth>
           }
         />
@@ -149,26 +189,28 @@ function App() {
             <RequireAuth>
               <Games
                 setShowNavbar={setShowNavbar}
-                game={game}
+                production={production}
                 setGame={setGame}
+                game={game}
               ></Games>
             </RequireAuth>
-          }
-        />
-        <Route
-          path="test"
-          element={
-            <HorizontalLinearStepper
-              setShowNavbar={setShowNavbar}
-            ></HorizontalLinearStepper>
           }
         />
         <Route
           path="profile"
           element={
             <RequireAuth>
-              <Profile setShowNavbar={setShowNavbar} />
+              <Profile setShowNavbar={setShowNavbar} production={production} />
             </RequireAuth>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Login
+              setShowNavbar={setShowNavbar}
+              production={production}
+            ></Login>
           }
         />
       </Routes>

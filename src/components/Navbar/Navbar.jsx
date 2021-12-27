@@ -15,7 +15,6 @@ function Navbar() {
   const showSidebar = () => setSidebar(!sidebar);
   useEffect(() => {
     const pot = window.localStorage.getItem("pot");
-    console.log("p", pot);
     if (pot == "false") {
       check = false;
     } else {
@@ -52,6 +51,7 @@ function Navbar() {
               className="nav-text"
               onClick={(e) => {
                 localStorage.removeItem("access_token");
+                localStorage.removeItem("pot");
                 goTo("/");
               }}
             >

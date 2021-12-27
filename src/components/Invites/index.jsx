@@ -7,16 +7,15 @@ export default function Invites(props) {
   const [answer, setAnswer] = useState(true);
   const token = window.localStorage.getItem("access_token");
   const { setShowNavbar } = props;
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
   setShowNavbar(true);
 
-  const {
-    error,
-    isPending,
-    data: invites,
-  } = useFetch("http://localhost:4000/invites");
+  const { error, isPending, data: invites } = useFetch(`${api}/invites`);
 
   function updateInvite(teamid, status) {
-    fetch(`http://localhost:4000/updateInvites`, {
+    fetch(`${api}/updateInvites`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +23,6 @@ export default function Invites(props) {
       },
       body: JSON.stringify({ teamid: teamid, status: status }),
     }).then((res) => {
-      console.log(res, "res");
       if (!res.ok) {
         const error = new Error("HTTP error");
         error.status = res.status;
@@ -34,8 +32,6 @@ export default function Invites(props) {
       }
     });
   }
-
-  console.log(invites);
 
   return (
     <main>

@@ -13,10 +13,8 @@ body {
 }
 
 .team {
-  display: flex;
-  justify-content: space-between;
   margin-bottom: 40px;
-  width: 60vw;
+  width: 40vw;
   background-color: #efefe0;
   padding: 1.5%;
   font-size: 26px;
@@ -63,4 +61,10 @@ main {
   font-size: 55px;
   line-height: 90px;
   filter: drop-shadow(5px 3px 3px rgba(0, 0, 0, 0.25));
+}
+
+.teamPreview {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

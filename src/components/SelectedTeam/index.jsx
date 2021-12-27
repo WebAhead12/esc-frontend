@@ -10,19 +10,27 @@ function SelectedTeam(props) {
   const { setShowNavbar } = props;
   const [answer, setAnswer] = useState(false);
   const [tosay, Settosay] = useState("Resume Sent");
+  const api = props.production
+    ? "https://escbackend.herokuapp.com"
+    : "http://localhost:4000";
   setShowNavbar(true);
   const {
     error,
     isPending,
     data: data,
-  } = useFetch(`http://localhost:4000/Selectedteams/${props.teamName}`);
+  } = useFetch(`${api}/Selectedteams/${props.teamName}`);
+
+  const reqs = {
+    role: "Role",
+    rank: "Rank",
+  };
 
   useEffect(() => {
     if (!data) return;
 
     const team = data ? data[0] : null;
 
-    fetch(`http://localhost:4000/checkRequests`, {
+    fetch(`${api}/checkRequests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +39,6 @@ function SelectedTeam(props) {
       body: JSON.stringify({ teamid: team.id }),
     })
       .then((res) => {
-        console.log(res, "res");
         if (!res.ok) {
           const error = new Error("HTTP error");
           error.status = res.status;
@@ -41,7 +48,6 @@ function SelectedTeam(props) {
         }
       })
       .then((check) => {
-        console.log("check", check);
         if (!check.length) {
           setAnswer(true);
           Settosay("Send Resume");
@@ -51,7 +57,7 @@ function SelectedTeam(props) {
 
   function addResume(teamid) {
     if (answer) {
-      fetch(`http://localhost:4000/addRequests`, {
+      fetch(`${api}/addRequests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +65,6 @@ function SelectedTeam(props) {
         },
         body: JSON.stringify({ teamid: teamid }),
       }).then((res) => {
-        console.log(res, "res");
         if (!res.ok) {
           const error = new Error("HTTP error");
           error.status = res.status;
@@ -71,7 +76,6 @@ function SelectedTeam(props) {
     }
   }
   const team = data ? data[0] : null;
-  console.log("stats", team);
   return (
     <div>
       {error && <div>{error}</div>}
@@ -82,14 +86,15 @@ function SelectedTeam(props) {
             <div className={style.textDiv}>
               <h1 className={style.Name}> {team.teamname}</h1>
               <p className={style.description}>
-                {/* About {team.teamname}:{team.description} */}
+                About {team.teamname}:<br />
+                {team.description}
               </p>
               <h3>Requirement:</h3>
-              {/* <ul className={style.requirements}>
+              <ul className={style.requirements}>
                 {Object.keys(team.requirements).map((key) => {
-                  return <li>{`${key}: ${team.requirements[key]}`}</li>;
+                  return <li>{`${reqs[key]}: ${team.requirements[key]}`}</li>;
                 })}
-              </ul> */}
+              </ul>
             </div>
 
             <img src={team.imagelink} alt="logo" className={style.img} />
