@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import useFetch from "../../fetch";
 
 export default function PlayersByGame(props) {
+  //fetches all players by game
   const goTo = useNavigate();
   const {
     error,

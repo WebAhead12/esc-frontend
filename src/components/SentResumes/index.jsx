@@ -11,9 +11,9 @@ export default function SentResumes(props) {
     ? "https://escbackend.herokuapp.com"
     : "http://localhost:4000";
   setShowNavbar(true);
-
+//fetches all sent resumes
   const { error, isPending, data: resumes } = useFetch(`${api}/requests`);
-
+  //function that updatesResume to accept or decline
   function updateResume(playerid, status) {
     fetch(`${api}/updateRequests`, {
       method: "POST",

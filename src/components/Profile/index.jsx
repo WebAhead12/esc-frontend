@@ -34,17 +34,19 @@ function Profile(props) {
 
   React.useEffect(() => {
     if (pot !== null) {
-      if (pot === "true") {
+      if (pot === "true") { // if player
         let token = localStorage.getItem("access_token");
         let config = {
           headers: {
             authorization: `Bearer ${token}`,
           },
         };
+        //fetches playerProfile
         axios.get(`${api}/playerProfile`, config).then((data) => {
-          setPlayer(data.data[0]);
-        });
+          setPlayer(data.data[0]); 
+        }); 
       } else if (pot === "false") {
+        //else fetches team profile
         let token = localStorage.getItem("access_token");
         let config = {
           headers: {

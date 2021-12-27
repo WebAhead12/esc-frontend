@@ -14,6 +14,7 @@ function SelectedTeam(props) {
     ? "https://escbackend.herokuapp.com"
     : "http://localhost:4000";
   setShowNavbar(true);
+  //fetches selected team
   const {
     error,
     isPending,
@@ -29,7 +30,7 @@ function SelectedTeam(props) {
     if (!data) return;
 
     const team = data ? data[0] : null;
-
+//checks if team has any requests from player
     fetch(`${api}/checkRequests`, {
       method: "POST",
       headers: {

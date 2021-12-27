@@ -18,7 +18,7 @@ function SelectedPlayer(props) {
   const { game } = props;
 
   useEffect(() => {
-    console.log("username" + props.username);
+    //fetches player bygame
     setIsPending(true);
     fetch(`${api}/Selectedplayer/${props.username}`)
       .then((res) => res.json())
@@ -30,7 +30,7 @@ function SelectedPlayer(props) {
   }, []);
 
   useEffect(() => {
-    console.log("player: " + player);
+  //fetches player invites by team that is logged in
     fetch(`${api}/checkInvites`, {
       method: "POST",
       headers: {
@@ -49,6 +49,7 @@ function SelectedPlayer(props) {
         }
       })
       .then((check) => {
+        //if not invited then its available to request
         if (!check.length) {
           setAnswer(true);
           Settosay("Send Request");

@@ -4,6 +4,7 @@ import useFetch from "../../fetch";
 
 export default function TeamsByGame(props) {
   const goTo = useNavigate();
+  //fetches all teams by game
   const {
     error,
     isPending,
