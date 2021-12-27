@@ -91,9 +91,10 @@ function SelectedTeam(props) {
               </p>
               <h3>Requirement:</h3>
               <ul className={style.requirements}>
-                {Object.keys(team.requirements).map((key) => {
-                  return <li>{`${reqs[key]}: ${team.requirements[key]}`}</li>;
-                })}
+                {team.requirements &&
+                  Object.keys(team.requirements).map((key) => {
+                    return <li>{`${reqs[key]}: ${team.requirements[key]}`}</li>;
+                  })}
               </ul>
             </div>
 

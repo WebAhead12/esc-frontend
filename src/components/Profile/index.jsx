@@ -144,26 +144,27 @@ function Profile(props) {
                   <div>
                     <h3> Stats </h3>
                     <ul className={style.stats}>
-                      {Object.keys(player.stats).map((key) => {
-                        if (player.stats[key] !== null) {
-                          let temp = Object.keys(player.stats[key]).map(
-                            (stat) => {
-                              return (
-                                <li>
-                                  {stat}: {player.stats[key][stat]}
-                                </li>
-                              );
-                            }
-                          );
-                          return (
-                            <li>
-                              {key}:<ul>{temp}</ul>
-                            </li>
-                          );
-                        } else {
-                          return null;
-                        }
-                      })}
+                      {player.stats &&
+                        Object.keys(player.stats).map((key) => {
+                          if (player.stats[key] !== null) {
+                            let temp = Object.keys(player.stats[key]).map(
+                              (stat) => {
+                                return (
+                                  <li>
+                                    {stat}: {player.stats[key][stat]}
+                                  </li>
+                                );
+                              }
+                            );
+                            return (
+                              <li>
+                                {key}:<ul>{temp}</ul>
+                              </li>
+                            );
+                          } else {
+                            return null;
+                          }
+                        })}
                     </ul>{" "}
                   </div>
                 ) : null}

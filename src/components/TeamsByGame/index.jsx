@@ -2,7 +2,7 @@ import style from "./style.module.css";
 import { useNavigate } from "react-router";
 import useFetch from "../../fetch";
 
-export default function Teams(props) {
+export default function TeamsByGame(props) {
   const goTo = useNavigate();
   const {
     error,
