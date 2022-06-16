@@ -9,6 +9,9 @@ import Teams from "./components/Teams";
 import Invites from "./components/Invites";
 import Profile from "./components/Profile";
 import Games from "./components/Games";
+import TeamsByGame from "./components/TeamsByGame";
+import PlayersByGame from "./components/PlayersByGame";
+
 import HorizontalLinearStepper from "./components/HorizontalLinearStepper.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
 import React from "react";
@@ -50,12 +53,11 @@ function App() {
   const [showNavbar, setShowNavbar] = React.useState(true);
   const [teamName, setTeamName] = React.useState(null);
   const [username, setUsername] = React.useState(null);
-  const [pot, setPot] = React.useState(true);
   const [production, setProduction] = React.useState(false);
   const [game, setGame] = React.useState("");
   return (
     <>
-      {showNavbar ? <Navbar pot={pot} /> : null}
+      {showNavbar ? <Navbar /> : null}
       <Routes>
         <Route
           path="/"
@@ -94,6 +96,30 @@ function App() {
                   production={production}
                 />
               </CheckTeam>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="TeamByGame"
+          element={
+            <RequireAuth>
+              <TeamsByGame
+                setShowNavbar={setShowNavbar}
+                game={game}
+                setTeamName={setTeamName}
+              />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="PlayersByGame"
+          element={
+            <RequireAuth>
+              <PlayersByGame
+                setShowNavbar={setShowNavbar}
+                game={game}
+                setUsername={setUsername}
+              />
             </RequireAuth>
           }
         />
@@ -156,19 +182,7 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route
-          path="games"
-          element={
-            <RequireAuth>
-              <Games
-                setShowNavbar={setShowNavbar}
-                production={production}
-                setGame={setGame}
-                game={game}
-              ></Games>
-            </RequireAuth>
-          }
-        />
+
         <Route
           path="profile"
           element={

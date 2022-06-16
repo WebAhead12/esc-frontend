@@ -11,9 +11,9 @@ export default function SentResumes(props) {
     ? "https://escbackend.herokuapp.com"
     : "http://localhost:4000";
   setShowNavbar(true);
-
+//fetches all sent resumes
   const { error, isPending, data: resumes } = useFetch(`${api}/requests`);
-
+  //function that updatesResume to accept or decline
   function updateResume(playerid, status) {
     fetch(`${api}/updateRequests`, {
       method: "POST",
@@ -44,7 +44,9 @@ export default function SentResumes(props) {
             <div className={style.resume}>
               <h className="title">{resume.username}</h>
               <div className={style.status}>Status:{resume.status}</div>
-              {resume.status != "Pending" ? null : (
+              {resume.status != "Pending" ? (
+                <div>Players Email: {resume.email} </div>
+              ) : (
                 <div className="answer">
                   <div
                     className={style.decline}

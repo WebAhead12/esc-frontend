@@ -7,13 +7,14 @@ export default function Teams(props) {
   const api = props.production
     ? "https://escbackend.herokuapp.com"
     : "http://localhost:4000";
+  //fetches all teams
   const { error, isPending, data: teams } = useFetch(`${api}/teams`);
   const { setShowNavbar } = props;
   setShowNavbar(true);
 
   return (
     <main>
-      <div className={style.title}>Teams</div>
+      <div className={style.title}>All Teams</div>
       <div className={style.teams}>
         {error && <div>{error}</div>}
         {isPending && <div>Loading...</div>}

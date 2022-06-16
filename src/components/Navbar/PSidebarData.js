@@ -13,7 +13,7 @@ export const PSidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Teams",
+    title: "All-Teams",
     path: "/teams",
     icon: <IoIcons.IoIosPaper />,
     cName: "nav-text",

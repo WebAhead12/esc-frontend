@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+//function that takes a url and fetches it
 const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);

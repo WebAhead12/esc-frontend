@@ -3,13 +3,14 @@ import { useNavigate } from "react-router";
 import useFetch from "../../fetch";
 
 export default function Players(props) {
+  //fetches all players
   const api = props.production
     ? "https://escbackend.herokuapp.com"
     : "http://localhost:4000";
   const { error, isPending, data: players } = useFetch(`${api}/players`);
   const goTo = useNavigate();
   props.setShowNavbar(true);
-
+  //returns all players
   return (
     <main>
       <div className={style.title}>Players</div>
@@ -22,6 +23,7 @@ export default function Players(props) {
               className={style.player}
               key={player.id}
               onClick={() => {
+                //when clicked on player it sets its username and goes to selected player
                 props.setUsername(player.username);
                 goTo("/SelectedPlayer");
               }}

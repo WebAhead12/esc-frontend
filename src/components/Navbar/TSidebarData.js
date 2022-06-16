@@ -13,7 +13,7 @@ export const TSidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Players",
+    title: "All-Players",
     path: "/players",
     icon: <GiIcons.GiPlayerBase />,
     cName: "nav-text",

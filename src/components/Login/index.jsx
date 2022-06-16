@@ -15,11 +15,8 @@ const Login = (props) => {
   const goTo = useNavigate();
   useEffect(() => {
     if (utils.checkLogin()) {
-      if (pot) {
-        goTo("/teams");
-      } else {
-        goTo("/players");
-      }
+      //checks if there is already a token/user logged in
+      goTo("/games");
     }
   }, []);
   const { setShowNavbar } = props;

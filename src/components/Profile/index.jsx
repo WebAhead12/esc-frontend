@@ -34,17 +34,19 @@ function Profile(props) {
 
   React.useEffect(() => {
     if (pot !== null) {
-      if (pot === "true") {
+      if (pot === "true") { // if player
         let token = localStorage.getItem("access_token");
         let config = {
           headers: {
             authorization: `Bearer ${token}`,
           },
         };
+        //fetches playerProfile
         axios.get(`${api}/playerProfile`, config).then((data) => {
-          setPlayer(data.data[0]);
-        });
+          setPlayer(data.data[0]); 
+        }); 
       } else if (pot === "false") {
+        //else fetches team profile
         let token = localStorage.getItem("access_token");
         let config = {
           headers: {
@@ -144,26 +146,27 @@ function Profile(props) {
                   <div>
                     <h3> Stats </h3>
                     <ul className={style.stats}>
-                      {Object.keys(player.stats).map((key) => {
-                        if (player.stats[key] !== null) {
-                          let temp = Object.keys(player.stats[key]).map(
-                            (stat) => {
-                              return (
-                                <li>
-                                  {stat}: {player.stats[key][stat]}
-                                </li>
-                              );
-                            }
-                          );
-                          return (
-                            <li>
-                              {key}:<ul>{temp}</ul>
-                            </li>
-                          );
-                        } else {
-                          return null;
-                        }
-                      })}
+                      {player.stats &&
+                        Object.keys(player.stats).map((key) => {
+                          if (player.stats[key] !== null) {
+                            let temp = Object.keys(player.stats[key]).map(
+                              (stat) => {
+                                return (
+                                  <li>
+                                    {stat}: {player.stats[key][stat]}
+                                  </li>
+                                );
+                              }
+                            );
+                            return (
+                              <li>
+                                {key}:<ul>{temp}</ul>
+                              </li>
+                            );
+                          } else {
+                            return null;
+                          }
+                        })}
                     </ul>{" "}
                   </div>
                 ) : null}
